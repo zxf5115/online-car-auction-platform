@@ -1,26 +1,31 @@
 export const member = {
-  list: '学员列表',
-  from: '学员操作',
-  info: '学员信息',
-  view: '学员详情',
-  delete: '删除学员',
-  export: '导出学员',
-  archive_info: '学员档案',
+  list: '消费者列表',
+  from: '消费者操作',
+  info: '消费者信息',
+  view: '消费者详情',
+  delete: '删除消费者',
+  export: '导出消费者',
+  archive_info: '消费者档案',
   view_order: '查看订单',
   course_production: '课程作品',
   upload_finish: '已上传',
   upload_wait: '未上传',
 
-  member_no: '学员ID',
-  avatar: '宝宝头像',
+  user_info: '个人信息',
+
+  member_no: '消费者ID',
+  avatar: '消费者头像',
   username: '登录账户',
   mobile: '手机',
   email: '邮箱',
-  nickname: '宝宝昵称',
+  nickname: '消费者昵称',
 
-  red_envelope: '红包金额',
-  lollipop: '棒棒糖',
-  production: '累计作品',
+  address_info: '收货地址',
+  wallet: '钱包',
+
+  attention: '关注',
+  fans: '粉丝',
+  praise: '获赞',
 
   status: '账号状态',
   last_login_time: '最后登录时间',
@@ -28,9 +33,6 @@ export const member = {
 
   enable: '解禁',
   disable: '禁用',
-
-  freeze: '冻结',
-  thaw: '解冻',
 
   role: {
     list: '身份列表',
@@ -77,12 +79,12 @@ export const member = {
     list: '档案列表',
     from: '档案操作',
     view: '档案详情',
-    info: '学员档案',
+    info: '消费者档案',
 
-    sex: '宝宝性别',
-    age: '宝宝年龄',
+    sex: '消费者性别',
+    age: '消费者年龄',
     weixin: '微信号',
-    birthday: '宝宝生日',
+    birthday: '消费者生日',
     city: '所在城市',
     area: '地区',
     address: '详细地址',
@@ -98,7 +100,7 @@ export const member = {
 
     rules: {
       member_id: {
-        require: '学员昵称不能为空',
+        require: '消费者昵称不能为空',
       },
       realname: {
         require: '真实姓名不能为空',
@@ -109,13 +111,6 @@ export const member = {
     },
   },
 
-  homework: {
-    'answer_time': '完成时间',
-    'answer_content': '学员答案',
-    'answer_result': '老师批复',
-    'answer_remark': '老师建议',
-  },
-
 
   address: {
     list: '收货地址列表',
@@ -124,14 +119,15 @@ export const member = {
 
     name: '收货人姓名',
     mobile: '联系电话',
+    postcode: '邮政编号',
     province: '省',
     city: '市',
     county: '县',
     address: '收货地址',
   },
 
-  account: {
-    payment_name: '支付宝姓名',
-    payment_account: '支付宝账号',
+  asset: {
+    cash_money: '现金金额',
+    credit_money: '信用余额',
   }
 }

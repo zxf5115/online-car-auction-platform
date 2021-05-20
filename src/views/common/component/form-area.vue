@@ -2,21 +2,21 @@
   <el-form-item :label="$t('common.area')" prop="mobile" class="area">
     <div class="area">
       <div>
-        <el-select v-model="province_id" filterable size="small" value-key="id" @change="selectProvince" placeholder="请选择省份">
+        <el-select v-model="province" filterable size="small" value-key="id" @change="selectProvince" placeholder="请选择省份">
           <el-option value="" label="请选择省份"></el-option>
           <el-option :key="index" :value="item.id" :label="item.title" v-for="(item, index) in provinceList"></el-option>
         </el-select>
       </div>
 
       <div>
-        <el-select v-model="city_id" filterable size="small" value-key="id" @change="selectCity" placeholder="请选择城市">
+        <el-select v-model="city" filterable size="small" value-key="id" @change="selectCity" placeholder="请选择城市">
           <el-option value="" label="请选择城市"></el-option>
           <el-option :key="index" :value="item.id" :label="item.title" v-for="(item, index) in cityList"></el-option>
         </el-select>
       </div>
 
       <div>
-        <el-select v-model="region_id" filterable size="small" value-key="id" @change="selectArea" placeholder="请选择区县">
+        <el-select v-model="region" filterable size="small" value-key="id" placeholder="请选择区县">
           <el-option value="" label="请选择区县"></el-option>
           <el-option :key="index" :value="item.id" :label="item.title" v-for="(item, index) in areaList"></el-option>
         </el-select>
@@ -69,16 +69,20 @@
             }
           }).then(({data}) => {
             if (data && data.status === 200) {
+              this.city = ''
+              this.region = ''
+
               this.cityList = data.data
             }
           })
         }
         else
         {
+          this.city = ''
+          this.region = ''
+
           this.cityList = []
         }
-
-        this.$emit('setProvinceInfo', event)
       },
       selectCity (event)
       {
@@ -92,20 +96,18 @@
             }
           }).then(({data}) => {
             if (data && data.status === 200) {
+              this.region = ''
+
               this.areaList = data.data
             }
           })
         }
         else
         {
+          this.region = ''
+
           this.areaList = []
         }
-
-        this.$emit('setCityInfo', event)
-      },
-      selectArea (event)
-      {
-        this.$emit('setAreaInfo', event)
       }
     },
     watch: {

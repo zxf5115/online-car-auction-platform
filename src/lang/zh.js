@@ -14,21 +14,13 @@ import  {log}  from './system/platform/log/zh'
 // 模块
 
 import  {organization}  from './module/platform/organization/zh'
-import  {squad}  from './module/platform/organization/squad/zh'
 
 import  {member}  from './module/platform/member/zh'
-import  {teacher}  from './module/platform/teacher/zh'
-
-import  {production}  from './module/platform/production/zh'
-import  {template}  from './module/platform/template/zh'
+import  {merchant}  from './module/platform/merchant/zh'
 
 import  {advertising}  from './module/platform/advertising/zh'
-import  {course}  from './module/platform/education/course/zh'
-import  {courseware}  from './module/platform/education/courseware/zh'
 
 import  {order}  from './module/platform/order/zh'
-
-import  {goods}  from './module/platform/goods/zh'
 
 import  {complain}  from './module/platform/complain/zh'
 
@@ -90,39 +82,14 @@ export default {
     ...organization
   },
 
-  // 学员
+  // 消费者
   member: {
     ...member
   },
 
-  // 作品
-  production: {
-    ...production
-  },
-
-  // 模板
-  template: {
-    ...template
-  },
-
-  // 老师
-  teacher: {
-    ...teacher
-  },
-
-  // 课程
-  course: {
-    ...course
-  },
-
-  // 课件
-  courseware: {
-    ...courseware
-  },
-
-  // 班级
-  squad: {
-    ...squad
+  // 车商
+  merchant: {
+    ...merchant
   },
 
   // 订单
@@ -130,10 +97,6 @@ export default {
     ...order
   },
 
-  // 商品
-  goods: {
-    ...goods
-  },
 
   // 投诉
   complain: {

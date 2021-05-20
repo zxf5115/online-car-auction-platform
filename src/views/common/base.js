@@ -95,6 +95,10 @@ export default {
           'goods_title': this.dataForm.goods_title,
           'course_start_time': this.dataForm.course_start_time,
           'account_payment_account': this.dataForm.account_payment_account,
+
+          'address_address': this.dataForm.address_address,
+          'certification_type': this.dataForm.certification_type,
+          'certification_audit_status': this.dataForm.certification_audit_status,
         })
       }).then(({data}) => {
         if (data && data.status === 200)

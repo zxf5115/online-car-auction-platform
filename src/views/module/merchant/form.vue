@@ -3,7 +3,17 @@
     <div class="admin_main_block">
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
-          <div>{{ $t('member.from') }}</div>
+          <div>
+            <span v-if="dataForm.certification_type == 1">
+              {{ $t('merchant.people') }}
+            </span>
+            <span v-else-if="dataForm.certification_type == 2">
+              {{ $t('merchant.bank_card') }}
+            </span>
+            <span v-else>
+              {{ $t('merchant.company') }}
+            </span>
+          </div>
         </div>
 
         <div class="admin_main_block_right">
@@ -16,52 +26,83 @@
       </div>
 
       <div class="admin_form_main">
-        <el-form label-width="100px" ref="dataForm" :model="dataForm" :rules="dataRule">
+        <el-form label-width="120px" ref="dataForm" :model="dataForm" :rules="dataRule">
 
-          <el-form-item :label="$t('member.avatar')" prop="avatar">
-            <el-upload class="avatar-uploader" :action="this.$http.adornUrl('/file/picture')" :show-file-list="false" :headers="upload_headers" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-              <img v-if="dataForm.avatar" :src="dataForm.avatar" class="avatar-upload">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-form-item>
+          <div v-if="dataForm.certification_type == 1">
+            <el-form-item :label="$t('merchant.certification.people_realname')" prop="realname">
+              <el-input v-model="dataForm.realname" :placeholder="$t('common.please_input')+$t('merchant.certification.people_realname')"></el-input>
+            </el-form-item>
 
-          <el-form-item :label="$t('member.username')" prop="username">
-            <el-input v-model="dataForm.username" :placeholder="$t('common.please_input') + $t('member.username')"></el-input>
-          </el-form-item>
+            <el-form-item :label="$t('merchant.certification.mobile')" prop="mobile">
+              <el-input v-model="dataForm.mobile" :placeholder="$t('common.please_input')+$t('merchant.certification.mobile')"></el-input>
+            </el-form-item>
 
-          <el-form-item :label="$t('common.sms_notification')" prop="sms_notification">
-            <el-checkbox v-model="dataForm.sms_notification">
-              {{ $t('common.send_sms_notification') }}
-            </el-checkbox>
-          </el-form-item>
+            <el-form-item :label="$t('merchant.certification.people_certificate_no')" prop="certificate_no">
+              <el-input v-model="dataForm.certificate_no" :placeholder="$t('common.please_input')+$t('merchant.certification.people_certificate_no')"></el-input>
+            </el-form-item>
 
-          <el-form-item :label="$t('member.nickname')" prop="nickname">
-            <el-input v-model="dataForm.nickname" :placeholder="$t('common.please_input') + $t('member.nickname')"></el-input>
-          </el-form-item>
+            <el-form-item class="mavon" :label="$t('merchant.certification.picture')" prop="picture">
+              <el-upload :action="this.$http.adornUrl('/file/picture')" list-type="picture-card" :headers="upload_headers" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"  :on-success="handlePictureSuccess" :before-upload="beforePictureUpload" :file-list="pictureList" :limit="2">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="">
+              </el-dialog>
+            </el-form-item>
+          </div>
+          <div v-else-if="dataForm.certification_type == 2">
+            <el-form-item :label="$t('merchant.certification.card_realname')" prop="realname">
+              <el-input v-model="dataForm.realname" :placeholder="$t('common.please_input')+$t('merchant.certification.card_realname')"></el-input>
+            </el-form-item>
 
-          <el-form-item :label="$t('member.mobile')" prop="mobile">
-            <el-input v-model="dataForm.mobile" :placeholder="$t('common.please_input') + $t('member.mobile')"></el-input>
-          </el-form-item>
+            <el-form-item :label="$t('merchant.certification.card_mobile')" prop="mobile">
+              <el-input v-model="dataForm.mobile" :placeholder="$t('common.please_input')+$t('merchant.certification.card_mobile')"></el-input>
+            </el-form-item>
 
-          <el-form-item :label="$t('member.email')" prop="email">
-            <el-input v-model="dataForm.email" :placeholder="$t('common.please_input') + $t('member.email')"></el-input>
-          </el-form-item>
+            <el-form-item :label="$t('merchant.certification.bank_card_no')" prop="bank_card_no">
+              <el-input v-model="dataForm.bank_card_no" :placeholder="$t('common.please_input')+$t('merchant.certification.bank_card_no')"></el-input>
+            </el-form-item>
 
-          <el-form-item :label="$t('member.role.title')" class="width_auto">
-            <el-checkbox-group v-model="dataForm.role_id" :max=1>
-              <el-checkbox v-for="(v,k) in roleList" :key="k" :label="v.id">
-                {{v.title}}
-              </el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
+            <el-form-item :label="$t('merchant.certification.card_certificate_no')" prop="certificate_no">
+              <el-input v-model="dataForm.certificate_no" :placeholder="$t('common.please_input')+$t('merchant.certification.card_certificate_no')"></el-input>
+            </el-form-item>
+          </div>
+          <div v-else>
+            <el-form-item :label="$t('merchant.certification.company_realname')" prop="realname">
+              <el-input v-model="dataForm.realname" :placeholder="$t('common.please_input')+$t('merchant.certification.company_realname')"></el-input>
+            </el-form-item>
 
-          <el-form-item :label="$t('member.status')" prop="status">
-            <el-switch v-model="dataForm.status" active-value="1" :active-text="$t('common.enable')" inactive-value="2" :inactive-text="$t('common.disable')">
-            </el-switch>
-          </el-form-item>
+            <el-form-item :label="$t('merchant.certification.mobile')" prop="mobile">
+              <el-input v-model="dataForm.mobile" :placeholder="$t('common.please_input')+$t('merchant.certification.mobile')"></el-input>
+            </el-form-item>
+
+            <el-form-item :label="$t('merchant.certification.company_certificate_no')" prop="certificate_no">
+              <el-input v-model="dataForm.certificate_no" :placeholder="$t('common.please_input')+$t('merchant.certification.company_certificate_no')"></el-input>
+            </el-form-item>
+
+            <el-form-item class="mavon" :label="$t('merchant.certification.picture')" prop="picture">
+              <el-upload :action="this.$http.adornUrl('/file/picture')" list-type="picture-card" :headers="upload_headers" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"  :on-success="handlePictureSuccess" :before-upload="beforePictureUpload" :file-list="pictureList" :limit="2">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="">
+              </el-dialog>
+            </el-form-item>
+          </div>
+
+          <div v-if="dataForm.audit_status == 0">
+            <el-form-item :label="$t('merchant.certification.audit_status')" prop="audit_status">
+              <el-switch v-model="dataForm.audit_status" active-value="1" :active-text="$t('merchant.audit_pass')" inactive-value="2" :inactive-text="$t('merchant.audit_unpass')">
+              </el-switch>
+            </el-form-item>
+
+            <el-form-item :label="$t('merchant.certification.audit_content')" prop="audit_content">
+              <el-input type="textarea" v-model="dataForm.audit_content" :placeholder="$t('common.please_input')+$t('merchant.certification.audit_content')"></el-input>
+            </el-form-item>
+          </div>
 
           <el-form-item>
-            <el-button v-if="isAuth('module:member:handle')" type="primary" @click="dataFormSubmit()">
+            <el-button v-if="isAuth('module:merchant:handle')" type="primary" @click="dataFormSubmit()">
               {{ $t('common.confirm') }}
             </el-button>
             <el-button @click="resetForm()">
@@ -80,29 +121,30 @@
     extends: common,
     data() {
       return {
-        model: 'member',
-        roleList: [],
+        model: 'merchant',
         upload_headers:{},
+        dialogImageUrl: '',
+        dialogVisible: false,
+        pictureList: [],
+        certificateList: [
+          {'id': '1', 'title': '中华共和国居民身份证'},
+          {'id': '2', 'title': '营业执照'},
+        ],
         dataForm:
         {
           id: 0,
-          role_id : [],
-          avatar: '',
-          username: '',
-          nickname: '',
-          email: '',
+          realname: '',
           mobile: '',
-          status: '1',
-          sms_notification: true,
+          certificate_type: '',
+          certificate_no: '',
+          bank_card_no: '',
+          picture: [],
+          certification_type: '',
+          audit_status: '',
+          audit_content: '',
         },
         dataRule:
         {
-          username: [
-            { required: true, message: this.$t('user.rules.username.require'), trigger: 'blur' },
-          ],
-          nickname: [
-            { required: true, message: this.$t('user.rules.nickname.require'), trigger: 'blur' },
-          ],
         }
       };
     },
@@ -117,17 +159,23 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/member/view/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/merchant/view/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.avatar   = data.data.avatar
-                this.dataForm.username = data.data.username
-                this.dataForm.nickname = data.data.nickname
-                this.dataForm.email    = data.data.email
-                this.dataForm.mobile   = data.data.mobile
-                this.dataForm.status   = data.data.status.value + ''
+
+                this.dataForm.realname           = data.data.certification.realname
+                this.dataForm.mobile             = data.data.certification.mobile
+                this.dataForm.certificate_type   = data.data.certification.certificate_type.value
+                this.dataForm.certificate_no     = data.data.certification.certificate_no
+                this.dataForm.bank_card_no       = data.data.certification.bank_card_no
+                this.dataForm.certification_type = data.data.certification.type.value
+                this.dataForm.audit_status       = data.data.certification.audit_status.value
+                this.dataForm.audit_content      = data.data.certification.audit_content
+
+                this.dataForm.picture           = data.data.pictureData
+                this.pictureList = data.data.pictureList
               }
             })
           }
@@ -138,18 +186,19 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/member/handle`),
+              url: this.$http.adornUrl(`/merchant/handle`),
               method: 'post',
               data: this.$http.adornData({
-                'id': this.dataForm.id || undefined,
-                'role_id': this.dataForm.role_id,
-                'avatar': this.dataForm.avatar,
-                'username': this.dataForm.username,
-                'nickname': this.dataForm.nickname,
+                'id': this.dataForm.id,
+                'certification_type': this.dataForm.certification_type,
+                'realname': this.dataForm.realname,
                 'mobile': this.dataForm.mobile,
-                'email': this.dataForm.email,
-                'status': this.dataForm.status,
-                'sms_notification': this.dataForm.sms_notification,
+                'certificate_type': this.dataForm.certificate_type,
+                'certificate_no': this.dataForm.certificate_no,
+                'bank_card_no': this.dataForm.bank_card_no,
+                'picture': this.dataForm.picture,
+                'audit_status': this.dataForm.audit_status,
+                'audit_content': this.dataForm.audit_content,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {
@@ -162,49 +211,39 @@
           }
         })
       },
-      loadRoleList () {
-        this.$http({
-          url: this.$http.adornUrl('/member/role/select'),
-          method: 'get'
-        }).then(({data}) => {
-          if (data && data.status === 200) {
-            this.roleList = data.data
-          } else {
-            this.$message.error(this.$t(data.message))
-          }
-        })
-      },
       resetForm:function()
       {
         this.$refs['dataForm'].resetFields();
       },
-      handleAvatarSuccess(res, file) {
-        this.dataForm.avatar = res.data;
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
       },
-      beforeAvatarUpload(file) {
-        const isPicture = (file.type === 'image/jpeg' || file.type === 'image/png');
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isPicture) {
-          var message = this.$t('common.rules.picture.picture_type');
-          this.$message.error(this.$t(data.message))
-        }
-        if (!isLt2M) {
-          var message = this.$t('common.rules.picture.picture_size');
-          this.$message.error(this.$t(data.message))
-        }
-
-        return isPicture && isLt2M;
+      handlePictureSuccess(res, file) {
+        this.dataForm.picture.push(res.data);
       },
+      handleRemove(file, fileList) {
+
+        let url = []
+
+        fileList.forEach(res => {
+          url.push(res.url);
+        });
+
+        this.dataForm.picture = url
+      }
     },
     created() {
       this.init();
 
       // 要保证取到
       this.upload_headers.Authorization = 'Bearer ' + localStorage.getItem('token');
-    },
-    mounted () {
-      this.loadRoleList();
-    },
+    }
   };
 </script>
+
+<style lang="scss" scoped>
+  .mavon {
+    width: 95% !important;
+  }
+</style>
