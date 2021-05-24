@@ -21,18 +21,6 @@
             <el-input :placeholder="$t('advertising.position.title')" v-model="dataForm.title"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('advertising.position.width')" prop="width">
-            <el-input :placeholder="$t('advertising.position.width')" v-model="dataForm.width"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.position.height')" prop="height">
-            <el-input :placeholder="$t('advertising.position.height')" v-model="dataForm.height"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.position.is_open')" prop="is_open">
-            <el-switch active-value="1" inactive-value="2" v-model="dataForm.is_open"></el-switch>
-          </el-form-item>
-
           <el-form-item>
             <el-button v-if="isAuth('module:advertising:position:handle')" type="primary" @click="dataFormSubmit()">
               {{ $t('common.confirm') }}
@@ -57,25 +45,15 @@
     {
       return {
         model: 'advertising/position',
-        courseList: [],
         dataForm:
         {
           id: 0,
           title: '',
-          width: '',
-          height: '',
-          is_open: '1',
         },
         dataRule:
         {
           title: [
             { required: true, message: this.$t('advertising.position.rules.title.require'), trigger: 'blur' },
-          ],
-          width: [
-            { required: true, message: this.$t('advertising.position.rules.width.require'), trigger: 'blur' },
-          ],
-          height: [
-            { required: true, message: this.$t('advertising.position.rules.height.require'), trigger: 'blur' }
           ]
         }
       };
@@ -98,9 +76,6 @@
             }).then(({data}) => {
               if (data && data.status === 200) {
                 this.dataForm.title     = data.data.title
-                this.dataForm.width     = data.data.width
-                this.dataForm.height    = data.data.height
-                this.dataForm.is_open   = data.data.is_open.value + ''
               }
             })
           }
@@ -116,9 +91,6 @@
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'title': this.dataForm.title,
-                'width': this.dataForm.width,
-                'height': this.dataForm.height,
-                'is_open': this.dataForm.is_open,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {

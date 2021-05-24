@@ -6,20 +6,17 @@ export const advertising = {
   view: '查看广告',
 
   title: '广告标题',
-  type: '链接类型',
-  link: '广告链接',
+  content: '广告内容',
   picture: '广告图片',
-  url: '广告资源',
-  type: '广告类型',
+  enable: '上架',
+  disable: '下架',
+
   rules: {
     position_id: {
       require: '广告位标题不能为空',
     },
     title: {
       require: '广告标题不能为空',
-    },
-    type: {
-      require: '广告类型不能为空',
     },
     picture: {
       require: '广告图片不能为空',

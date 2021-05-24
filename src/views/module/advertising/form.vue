@@ -28,43 +28,18 @@
             <el-input :placeholder="$t('common.please_input')+$t('advertising.title')" v-model="dataForm.title"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('advertising.picture')" prop="picture">
-            <el-upload class="avatar-uploader" :action="this.$http.adornUrl('/file/picture')" :show-file-list="false" :headers="upload_headers" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-              <img v-if="dataForm.picture" :src="dataForm.picture" class="avatar-upload">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <el-form-item class="mavon" prop="content" :label="$t('advertising.content')">
+            <editor ref="editor" :value="dataForm.content"></editor>
+          </el-form-item>
+
+          <el-form-item class="mavon" :label="$t('advertising.picture')" prop="picture">
+            <el-upload :action="this.$http.adornUrl('/file/picture')" list-type="picture-card" :headers="upload_headers" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"  :on-success="handlePictureSuccess" :before-upload="beforePictureUpload" :file-list="pictureList" :limit="5">
+              <i class="el-icon-plus"></i>
             </el-upload>
-            <div class="red">
-              上传图片分辨率为：355*170
-            </div>
+            <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
           </el-form-item>
-
-          <el-form-item :label="$t('advertising.url')" prop="url">
-            <el-input :placeholder="$t('common.please_input')+$t('advertising.url')" v-model="dataForm.url"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.type')" prop="type">
-            <el-select v-model="dataForm.type" :placeholder="$t('common.please_select')+$t('advertising.type')" @change="setLinkType">
-              <el-option v-for="(v,k) in linkType" :label="v.title" :key="k" :value="v.id"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.link')" prop="link" :hidden="link">
-            <el-input :placeholder="$t('common.please_input')+$t('advertising.link')" v-model="dataForm.link"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.link')" prop="course_id" :hidden="course">
-            <el-select v-model="dataForm.course_id" :placeholder="$t('common.please_select')+$t('advertising.link')">
-              <el-option v-for="(v,k) in courseList" :label="v.title" :key="k" :value="v.id"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.link')" prop="goods_id" :hidden="goods">
-            <el-select v-model="dataForm.goods_id" :placeholder="$t('common.please_select')+$t('advertising.link')">
-              <el-option v-for="(v,k) in goodsList" :label="v.title" :key="k" :value="v.id"></el-option>
-            </el-select>
-          </el-form-item>
-
-
 
           <el-form-item :label="$t('common.sort')" prop="sort">
             <el-input-number :placeholder="$t('common.please_input')+$t('common.sort')" v-model="dataForm.sort"></el-input-number>
@@ -86,30 +61,27 @@
 
 <script>
   import common from '@/views/common/base'
+  import Editor from "@/components/form/editor"
   export default {
     extends: common,
+    components: {
+      Editor
+    },
     data() {
       return {
         model: 'advertising',
         position: [],
-        linkType: [
-          {"id":1, "title":"课程"},
-          {"id":2, "title":"商品"},
-          {"id":3, "title":"活动"},
-          {"id":4, "title":"邀请"},
-        ],
+        dialogImageUrl: '',
+        dialogVisible: false,
+        pictureList: [],
         upload_headers:{},
         dataForm:
         {
           id: 0,
           position_id: '',
           title: '',
-          picture: '',
-          url: '',
-          type: 1,
-          link: '',
-          course_id: '',
-          goods_id: '',
+          content: '',
+          picture: [],
           sort: 0,
         },
         dataRule:
@@ -120,12 +92,7 @@
           title: [
             { required: true, message: this.$t('advertising.rules.title.require'), trigger: 'blur' },
           ]
-        },
-        course: false,
-        goods: true,
-        link: true,
-        courseList: [],
-        goodsList: [],
+        }
       };
     },
     methods: {
@@ -146,39 +113,17 @@
               if (data && data.status === 200) {
                 this.dataForm.position_id = data.data.position_id
                 this.dataForm.title       = data.data.title
-                this.dataForm.picture     = data.data.picture
-                this.dataForm.url         = data.data.url
-                this.dataForm.type        = data.data.type.value
-                this.dataForm.link        = data.data.link
-                this.dataForm.course_id   = data.data.course_id
-                this.dataForm.goods_id    = data.data.goods_id
+                this.dataForm.content     = data.data.content
                 this.dataForm.sort        = data.data.sort
-
-                if(1 == this.dataForm.type)
-                {
-                  this.course = false
-                  this.goods = true
-                  this.link = true
-                }
-                else if(2 == this.dataForm.type)
-                {
-                  this.course = true
-                  this.goods = false
-                  this.link = true
-                }
-                else
-                {
-                  this.course = true
-                  this.goods = true
-                  this.link = false
-                }
+                this.dataForm.picture     = data.data.pictureData
+                this.pictureList          = data.data.pictureList
               }
             })
           }
         })
       },
       // 表单提交
-      dataFormSubmit () {console.log(1);
+      dataFormSubmit () {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
@@ -188,12 +133,8 @@
                 'id': this.dataForm.id || undefined,
                 'position_id': this.dataForm.position_id,
                 'title': this.dataForm.title,
+                'content': this.$refs.editor.content,
                 'picture': this.dataForm.picture,
-                'url': this.dataForm.url,
-                'type': this.dataForm.type,
-                'link': this.dataForm.link,
-                'course_id': this.dataForm.course_id,
-                'goods_id': this.dataForm.goods_id,
                 'sort': this.dataForm.sort,
               })
             }).then(({data}) => {
@@ -211,69 +152,33 @@
       {
         this.$refs['dataForm'].resetFields();
       },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      },
+      handlePictureSuccess(res, file) {
+        this.dataForm.picture.push(res.data);
+      },
+      handleRemove(file, fileList) {
+
+        let url = []
+
+        fileList.forEach(res => {
+          url.push(res.url);
+        });
+
+        this.dataForm.picture = url
+      },
       loadPositionList () {
         this.$http({
           url: this.$http.adornUrl('/advertising/position/select'),
-          method: 'get'
+          method: 'get',
+          params: this.$http.adornParams({
+            'is_open': 1
+          })
         }).then(({data}) => {
           if (data && data.status === 200) {
             this.position = data.data
-          } else {
-            this.$message.error(this.$t(data.message))
-          }
-        })
-      },
-      handleAvatarSuccess(res, file) {
-        this.dataForm.picture = res.data;
-      },
-      beforeAvatarUpload(file) {
-        const isLt2M = file.size / 1024 / 1024 < 10;
-
-        if (!isLt2M) {
-          this.$message.error(this.$t('common.file.rules.size'))
-        }
-
-        return isLt2M;
-      },
-      setLinkType(val) {
-        if(1 == val)
-        {
-          this.course = false
-          this.goods = true
-          this.link = true
-        }
-        else if(2 == val)
-        {
-          this.course = true
-          this.goods = false
-          this.link = true
-        }
-        else
-        {
-          this.course = true
-          this.goods = true
-          this.link = false
-        }
-      },
-      loadCourseList () {
-        this.$http({
-          url: this.$http.adornUrl('/education/course/select'),
-          method: 'get'
-        }).then(({data}) => {
-          if (data && data.status === 200) {
-            this.courseList = data.data
-          } else {
-            this.$message.error(this.$t(data.message))
-          }
-        })
-      },
-      loadGoodsList () {
-        this.$http({
-          url: this.$http.adornUrl('/goods/select'),
-          method: 'get'
-        }).then(({data}) => {
-          if (data && data.status === 200) {
-            this.goodsList = data.data
           } else {
             this.$message.error(this.$t(data.message))
           }
@@ -283,14 +188,18 @@
     created() {
       this.init();
 
+      this.loadPositionList();
+
       this.dataForm.position_id = this.$route.query.position_id;
 
       // 要保证取到
       this.upload_headers.Authorization = 'Bearer ' + localStorage.getItem('token');
-
-      this.loadPositionList();
-      this.loadCourseList();
-      this.loadGoodsList();
     }
   };
 </script>
+
+<style lang="scss" scoped>
+  .mavon {
+    width: 95% !important;
+  }
+</style>
