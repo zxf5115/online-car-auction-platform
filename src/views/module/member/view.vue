@@ -35,11 +35,6 @@
                         {{ dataForm.username }}
                       </el-form-item>
                     </el-col>
-                    <el-col :span="12">
-                      <el-form-item :label="$t('member.attention')">
-                        {{ 1 }}
-                      </el-form-item>
-                    </el-col>
                   </el-row>
                   <el-row>
                     <el-col :span="12">
@@ -47,21 +42,11 @@
                         {{ dataForm.nickname }}
                       </el-form-item>
                     </el-col>
-                    <el-col :span="12">
-                      <el-form-item :label="$t('member.fans')">
-                        {{ 2 }}
-                      </el-form-item>
-                    </el-col>
                   </el-row>
                   <el-row>
                     <el-col :span="12">
                       <el-form-item :label="$t('common.create_time')">
                         {{ dataForm.create_time }}
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                      <el-form-item :label="$t('member.praise')">
-                        {{ 3 }}
                       </el-form-item>
                     </el-col>
                   </el-row>

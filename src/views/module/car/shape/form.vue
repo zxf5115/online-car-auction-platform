@@ -3,7 +3,7 @@
     <div class="admin_main_block">
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
-          <div>{{ $t('advertising.position.from') }}</div>
+          <div>{{ $t('car.shape.from') }}</div>
         </div>
 
         <div class="admin_main_block_right">
@@ -17,24 +17,23 @@
 
       <div class="admin_form_main">
         <el-form label-width="100px" ref="dataForm" :model="dataForm" :rules="dataRule">
-          <el-form-item :label="$t('advertising.position.title')" prop="title">
-            <el-input :placeholder="$t('advertising.position.title')" v-model="dataForm.title"></el-input>
+          <el-form-item :label="$t('car.brand.title')" prop="brand_id">
+            <el-select v-model="dataForm.brand_id"  :placeholder="$t('common.please_select')+$t('car.brand.title')" @change="loadUnitList">
+              <el-option v-for="(v,k) in brandList" :label="v.title" :key="k" :value="v.id">
+              </el-option>
+            </el-select>
           </el-form-item>
 
-          <el-form-item :label="$t('advertising.position.width')" prop="width">
-            <el-input :placeholder="$t('advertising.position.width')" v-model="dataForm.width"></el-input>
+          <el-form-item :label="$t('car.shape.title')" prop="title">
+            <el-input :placeholder="$t('car.shape.title')" v-model="dataForm.title"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('advertising.position.height')" prop="height">
-            <el-input :placeholder="$t('advertising.position.height')" v-model="dataForm.height"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.position.is_open')" prop="is_open">
-            <el-switch active-value="1" inactive-value="2" v-model="dataForm.is_open"></el-switch>
+          <el-form-item :label="$t('common.sort')" prop="sort">
+            <el-input-number :placeholder="$t('common.please_input')+$t('common.sort')" v-model="dataForm.sort"></el-input-number>
           </el-form-item>
 
           <el-form-item>
-            <el-button v-if="isAuth('module:advertising:position:handle')" type="primary" @click="dataFormSubmit()">
+            <el-button v-if="isAuth('module:car:shape:handle')" type="primary" @click="dataFormSubmit()">
               {{ $t('common.confirm') }}
             </el-button>
             <el-button @click="resetForm()">
@@ -56,26 +55,22 @@
     data()
     {
       return {
-        model: 'advertising/position',
-        courseList: [],
+        model: 'car/shape',
+        brandList: [],
         dataForm:
         {
           id: 0,
+          brand_id: '',
           title: '',
-          width: '',
-          height: '',
-          is_open: '1',
+          sort: 0,
         },
         dataRule:
         {
+          brand_id: [
+            { required: true, message: this.$t('car.shape.rules.brand_id.require'), trigger: 'blur' },
+          ],
           title: [
-            { required: true, message: this.$t('advertising.position.rules.title.require'), trigger: 'blur' },
-          ],
-          width: [
-            { required: true, message: this.$t('advertising.position.rules.width.require'), trigger: 'blur' },
-          ],
-          height: [
-            { required: true, message: this.$t('advertising.position.rules.height.require'), trigger: 'blur' }
+            { required: true, message: this.$t('car.shape.rules.title.require'), trigger: 'blur' },
           ]
         }
       };
@@ -92,33 +87,31 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/advertising/position/view/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/car/shape/view/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.title     = data.data.title
-                this.dataForm.width     = data.data.width
-                this.dataForm.height    = data.data.height
-                this.dataForm.is_open   = data.data.is_open.value + ''
+                this.dataForm.brand_id = data.data.brand_id
+                this.dataForm.title    = data.data.title
+                this.dataForm.sort     = data.data.sort
               }
             })
           }
         })
       },
       // 表单提交
-      dataFormSubmit () {console.log(1);
+      dataFormSubmit () {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/advertising/position/handle`),
+              url: this.$http.adornUrl(`/car/shape/handle`),
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
+                'brand_id': this.dataForm.brand_id,
                 'title': this.dataForm.title,
-                'width': this.dataForm.width,
-                'height': this.dataForm.height,
-                'is_open': this.dataForm.is_open,
+                'sort': this.dataForm.sort,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {
@@ -134,11 +127,25 @@
       resetForm:function()
       {
         this.$refs['dataForm'].resetFields();
-      }
+      },
+      loadBrandList () {
+        this.$http({
+          url: this.$http.adornUrl('/car/brand/select'),
+          method: 'get'
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.brandList = data.data
+          } else {
+            this.$message.error(this.$t(data.message))
+          }
+        })
+      },
     },
     created(request)
     {
       this.init();
+
+      this.loadBrandList();
     }
   };
 </script>

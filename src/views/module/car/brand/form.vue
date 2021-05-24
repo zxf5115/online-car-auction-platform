@@ -3,7 +3,7 @@
     <div class="admin_main_block">
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
-          <div>{{ $t('advertising.position.from') }}</div>
+          <div>{{ $t('car.brand.from') }}</div>
         </div>
 
         <div class="admin_main_block_right">
@@ -15,33 +15,35 @@
         </div>
       </div>
 
-      <div class="admin_form_main">
+      <div class="admin_form_main color">
         <el-form label-width="100px" ref="dataForm" :model="dataForm" :rules="dataRule">
-          <el-form-item :label="$t('advertising.position.title')" prop="title">
-            <el-input :placeholder="$t('advertising.position.title')" v-model="dataForm.title"></el-input>
+
+          <el-form-item :label="$t('car.brand.title')" prop="title">
+            <el-input :placeholder="$t('common.please_input')+$t('car.brand.title')" v-model="dataForm.title"></el-input>
           </el-form-item>
 
-          <el-form-item :label="$t('advertising.position.width')" prop="width">
-            <el-input :placeholder="$t('advertising.position.width')" v-model="dataForm.width"></el-input>
+          <el-form-item :label="$t('car.brand.picture')" prop="picture">
+            <el-upload class="avatar-uploader" :action="this.$http.adornUrl('/file/picture')" :show-file-list="false" :headers="upload_headers" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+              <img v-if="dataForm.picture" :src="dataForm.picture" class="avatar-upload">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+            <div class="red">
+              上传图片分辨率为：200*200，最大20M
+            </div>
           </el-form-item>
 
-          <el-form-item :label="$t('advertising.position.height')" prop="height">
-            <el-input :placeholder="$t('advertising.position.height')" v-model="dataForm.height"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.position.is_open')" prop="is_open">
-            <el-switch active-value="1" inactive-value="2" v-model="dataForm.is_open"></el-switch>
+          <el-form-item :label="$t('common.sort')" prop="sort">
+            <el-input-number :placeholder="$t('common.please_input')+$t('common.sort')" v-model="dataForm.sort"></el-input-number>
           </el-form-item>
 
           <el-form-item>
-            <el-button v-if="isAuth('module:advertising:position:handle')" type="primary" @click="dataFormSubmit()">
+            <el-button v-if="isAuth('module:car:brand:handle')" type="primary" @click="dataFormSubmit()">
               {{ $t('common.confirm') }}
             </el-button>
             <el-button @click="resetForm()">
               {{ $t('common.reset') }}
             </el-button>
           </el-form-item>
-
         </el-form>
       </div>
     </div>
@@ -50,38 +52,31 @@
 
 <script>
   import common from '@/views/common/base'
-  export default
-  {
+  export default {
     extends: common,
-    data()
-    {
+    data() {
       return {
-        model: 'advertising/position',
-        courseList: [],
+        model: 'car/brand',
+        upload_headers:{},
         dataForm:
         {
           id: 0,
           title: '',
-          width: '',
-          height: '',
-          is_open: '1',
+          picture: '',
+          sort: 0,
         },
         dataRule:
         {
           title: [
-            { required: true, message: this.$t('advertising.position.rules.title.require'), trigger: 'blur' },
+            { required: true, message: this.$t('car.brand.rules.title.require'), trigger: 'blur' },
           ],
-          width: [
-            { required: true, message: this.$t('advertising.position.rules.width.require'), trigger: 'blur' },
-          ],
-          height: [
-            { required: true, message: this.$t('advertising.position.rules.height.require'), trigger: 'blur' }
+          picture: [
+            { required: true, message: this.$t('car.brand.rules.picture.require'), trigger: 'blur' },
           ]
         }
       };
     },
-    methods:
-    {
+    methods: {
       init ()
       {
         let query = this.$route.query
@@ -92,15 +87,15 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/advertising/position/view/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/car/brand/view/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.title     = data.data.title
-                this.dataForm.width     = data.data.width
-                this.dataForm.height    = data.data.height
-                this.dataForm.is_open   = data.data.is_open.value + ''
+                this.dataForm.id      = data.data.id
+                this.dataForm.title   = data.data.title
+                this.dataForm.picture = data.data.picture
+                this.dataForm.sort    = data.data.sort
               }
             })
           }
@@ -111,14 +106,13 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/advertising/position/handle`),
+              url: this.$http.adornUrl(`/car/brand/handle`),
               method: 'post',
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'title': this.dataForm.title,
-                'width': this.dataForm.width,
-                'height': this.dataForm.height,
-                'is_open': this.dataForm.is_open,
+                'picture': this.dataForm.picture,
+                'sort': this.dataForm.sort,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {
@@ -134,11 +128,25 @@
       resetForm:function()
       {
         this.$refs['dataForm'].resetFields();
-      }
+      },
+      handleAvatarSuccess(res, file) {
+        this.dataForm.picture = res.data;
+      },
+      beforeAvatarUpload(file) {
+        const isLt2M = file.size / 1024 / 1024 < 20;
+
+        if (!isLt2M) {
+          this.$message.error(this.$t('common.file.rules.size'))
+        }
+
+        return isLt2M;
+      },
     },
-    created(request)
-    {
+    created() {
       this.init();
+
+      // 要保证取到
+      this.upload_headers.Authorization = 'Bearer ' + localStorage.getItem('token');
     }
   };
 </script>
