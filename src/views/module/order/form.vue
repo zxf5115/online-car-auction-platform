@@ -241,6 +241,11 @@
                 <el-col :span="12">
                   <span>{{ $t('order.logistics_info') }}</span>
                 </el-col>
+                <el-col class="right" :span="12">
+                  <el-button v-if="isAuth('module:order:logistics:form')" type="primary" icon="el-icon-plus" @click="$router.push({name: 'module_order_logistics_form', query: {order_id: dataForm.id}})">
+                    {{ $t('common.create') }}
+                  </el-button>
+                </el-col>
               </el-row>
             </div>
             <div class="text item">
@@ -272,6 +277,14 @@
                 </el-table-column>
 
                 <el-table-column prop="content" :label="$t('order.logistics.content')">
+                </el-table-column>
+
+                <el-table-column :label="$t('common.handle')" fixed="right" width="100">
+                  <template slot-scope="scope">
+                    <el-button v-if="isAuth('module:order:logistics:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
+                      {{ $t('common.delete') }}
+                    </el-button>
+                  </template>
                 </el-table-column>
               </el-table>
             </div>
@@ -416,6 +429,49 @@
             this.dataList = data.data
           }
         })
+      },
+      // 删除
+      deleteHandle (id) {
+        var ids = id ? [id] : this.dataListSelections.map(item => {
+          return item.id
+        })
+
+        let message = this.$t('common.to_determine_the')
+                      + this.$t('common.current_check')
+                      + this.$t('common.for')
+                      + `${id ? this.$t('common.delete') : this.$t('common.batch_delete')}`
+                      + this.$t('common.handle')
+                      + `?`
+
+        if(this.message != undefined && this.message.error != undefined)
+        {
+          message = this.message.error
+        }
+
+        this.$confirm(message, this.$t('common.prompt'), {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        }).then(() => {
+          this.$http({
+            url: this.$http.adornUrl('/order/logistics/delete'),
+            method: 'post',
+            data: {id: this.$http.adornData(ids, false)}
+          }).then(({data}) => {
+            if (data && data.status === 200) {
+              this.$message({
+                message: this.$t('common.handle_success'),
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.getDataList()
+                }
+              })
+            } else {
+              this.$message.error(this.$t(data.message))
+            }
+          })
+        }).catch(() => {})
       },
     },
     created(request)

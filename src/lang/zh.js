@@ -30,6 +30,8 @@ import  {problem}  from './module/platform/common/problem/zh'
 
 import  {car}  from './module/platform/car/zh'
 
+import  {logistics}  from './module/platform/logistics/zh'
+
 export default {
 
   // 公共
@@ -115,7 +117,13 @@ export default {
     ...problem
   },
 
+  // 汽车
   car: {
     ...car
+  },
+
+  // 物流
+  logistics: {
+    ...logistics
   }
 }

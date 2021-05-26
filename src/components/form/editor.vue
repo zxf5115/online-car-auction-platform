@@ -32,8 +32,8 @@
           allowedImageTypes: ["jpeg", "jpg", "png", "gif"],
           imageMove: true, //图片是否能拖动
           imageDefaultDisplay: 'inline', //图片为行级元素
-          imageUploadURL: this.$http.adornUrl('/file/picture'), //图片上传地址
-          fileUploadURL: this.$http.adornUrl('/file/file'),//上传url
+          imageUploadURL: this.$http.adornUrl('/file/editor_picture'), //图片上传地址
+          fileUploadURL: this.$http.adornUrl('/file/editor_file'),//上传url
           requestHeaders: {
               Authorization: 'Bearer ' + localStorage.getItem('token')
           },

@@ -17,6 +17,12 @@ import router from './router'
 　　window.$ = jQuery
 　　Vue.use(VueFroala)
 
+    import VideoPlayer from 'vue-video-player'
+    require('video.js/dist/video-js.css')
+    require('vue-video-player/src/custom-theme.css')
+
+    Vue.use(VideoPlayer)
+
 
 import i18n from './lang'
 import VueCookie from 'vue-cookie'
