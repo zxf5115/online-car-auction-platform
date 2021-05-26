@@ -22,7 +22,7 @@
           </el-form-item>
 
           <el-form-item class="mavon" prop="content" :label="$t('problem.content')">
-            <div id="content"></div>
+            <editor ref="editor" :value="dataForm.content"></editor>
           </el-form-item>
 
           <el-form-item>
@@ -42,19 +42,16 @@
 
 <script>
   import common from '@/views/common/base'
-  import Vditor from "vditor"
-  import "vditor/dist/index.css"
-  export default
-  {
+  import Editor from "@/components/form/editor"
+  export default {
     extends: common,
     components: {
-      Vditor
+      Editor
     },
     data()
     {
       return {
         model: 'common/problem',
-        contentEditor: '',
         dataForm:
         {
           id: 0,
@@ -87,7 +84,7 @@
             }).then(({data}) => {
               if (data && data.status === 200) {
                 this.dataForm.title     = data.data.title
-                this.contentEditor.setValue(data.data.content)
+                this.dataForm.content     = data.data.content
               }
             })
           }
@@ -103,7 +100,7 @@
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'title': this.dataForm.title,
-                'content': this.contentEditor.getValue(),
+                'content': this.$refs.editor.content,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {
@@ -120,37 +117,10 @@
       {
         this.$refs['dataForm'].resetFields();
       },
-      initContentVditor () {
-        this.contentEditor = new Vditor("content",{
-          multiple: false,
-          height: 400,
-          "mode": "sv",
-          "preview": {
-            "mode": "both"
-          },
-          toolbarConfig:{
-            pin:true
-          },
-          cache:{
-            enable:false
-          },
-          upload: {
-            accept: 'image/*, .mp3, .wav, .mov, .mp4',
-            token: 'test',
-            headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem('token')
-            },
-            url: this.$http.adornUrl('/file/batchRichText')
-          },
-        })
-      },
     },
     created(request)
     {
       this.init();
-    },
-    mounted () {
-      this.initContentVditor();
     },
   };
 </script>
