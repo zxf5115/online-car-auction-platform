@@ -56,10 +56,16 @@
             </template>
           </el-table-column>
 
+          <el-table-column :label="$t('car.brand.is_hot')">
+            <template slot-scope="scope">
+              {{ scope.row.is_hot.text }}
+            </template>
+          </el-table-column>
+
           <el-table-column prop="create_time" :label="$t('common.create_time')">
           </el-table-column>
 
-          <el-table-column :label="$t('common.handle')" fixed="right" width="380">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="460">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:car:brand:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_car_brand_view', query: {id: scope.row.id}})">
                 {{ $t('common.view') }}
@@ -67,6 +73,15 @@
 
               <el-button v-if="isAuth('module:car:brand:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_car_brand_form', query: {id : scope.row.id}})">
                 {{ $t('common.update') }}
+              </el-button>
+
+              <el-button v-if="isAuth('module:car:brand:hot')" :type="scope.row.is_hot.value == 2 ? 'danger' : 'success'" :icon="scope.row.is_hot.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="hotHandle(scope.row.id, scope.row.is_hot.value)">
+                <span v-if="scope.row.is_hot.value == 1">
+                  {{ $t('car.brand.yes') }}
+                </span>
+                <span v-else>
+                  {{ $t('car.brand.no') }}
+                </span>
               </el-button>
 
               <el-button v-if="isAuth('module:car:brand:enable')" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
@@ -113,6 +128,40 @@
       };
     },
     methods: {
+      // 热门（普通）汽车品牌
+      hotHandle (id, status) {
+        let message = '您确定要设置当前汽车品牌为热门？'
+
+        if(1 == status)
+        {
+          message = '您确定要设置当前汽车品牌为普通？'
+        }
+
+        this.$confirm(message, this.$t('common.prompt'), {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        }).then(() => {
+          this.$http({
+            url: this.$http.adornUrl('/'+this.model+'/hot'),
+            method: 'post',
+            data: {id: id}
+          }).then(({data}) => {
+            if (data && data.status === 200) {
+              this.$message({
+                message: this.$t('common.handle_success'),
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.getDataList()
+                }
+              })
+            } else {
+              this.$message.error(this.$t(data.message))
+            }
+          })
+        }).catch(() => {})
+      },
       // 禁用（解禁）汽车品牌
       enableHandle (id, status) {
         let message = '您确定要解禁当前汽车品牌？'

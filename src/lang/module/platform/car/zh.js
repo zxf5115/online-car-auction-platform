@@ -49,6 +49,10 @@ export const car = {
 
     title: '品牌标题',
     picture: '品牌图片',
+    is_hot: '热门品牌',
+
+    yes: '热门',
+    no: '普通',
 
     rules: {
       title: {

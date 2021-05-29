@@ -1,18 +1,33 @@
 export const problem = {
-  list: '常见问题列表',
-  from: '常见问题操作',
-  create: '添加常见问题',
-  view: '查看常见问题',
+  list: '购车指南列表',
+  from: '购车指南操作',
+  create: '添加购车指南',
+  view: '查看购车指南',
 
-  title: '常见问题标题',
-  content: '常见问题答案',
+  title: '购车指南标题',
+  content: '购车指南答案',
 
   rules: {
     title: {
-      require: '常见问题标题不能为空',
+      require: '购车指南标题不能为空',
     },
     content: {
-      require: '常见问题答案不能为空',
+      require: '购车指南答案不能为空',
     }
-  }
+  },
+
+
+
+  // 购车指南分类
+  category: {
+    list: '购车指南分类列表',
+    from: '购车指南分类操作',
+    title: '购车指南分类标题',
+
+    rules: {
+      title: {
+        require: '购车指南分类标题不能为空',
+      }
+    },
+  },
 }
