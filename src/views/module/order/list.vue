@@ -118,7 +118,7 @@
           <el-table-column prop="create_time" :label="$t('order.create_time')" width="140">
           </el-table-column>
 
-          <el-table-column :label="$t('common.handle')" fixed="right" width="480">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="500">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:order:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_order_view', query: {id: scope.row.id}})">
                 {{ $t('common.view') }}
