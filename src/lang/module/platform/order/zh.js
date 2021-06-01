@@ -5,6 +5,7 @@ export const order = {
   basic_info: '订单信息',
   address_info: '收货信息',
   logistics_info: '物流信息',
+  logistics_create: '物流',
 
   pay_finish: '确认支付',
   take_finish: '确认提货',

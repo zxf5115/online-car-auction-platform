@@ -128,6 +128,10 @@
                 {{ $t('common.update') }}
               </el-button>
 
+              <el-button v-if="isAuth('module:order:logistics:form')" type="primary" icon="el-icon-plus" @click="$router.push({name: 'module_order_logistics_form', query: {order_id: scope.row.id}})">
+                {{ $t('order.logistics_create') }}
+              </el-button>
+
               <el-button v-if="isAuth('module:order:status') && scope.row.order_status['value'] == 0" type="warning" icon="el-icon-finished" @click="statusHandle(scope.row.id, 1)">
                 {{ $t('order.pay_finish') }}
               </el-button>
