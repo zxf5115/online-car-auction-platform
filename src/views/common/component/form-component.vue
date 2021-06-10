@@ -89,7 +89,7 @@
     data() {
       return {
         upload_headers: {},
-        upload_url: this.$http.adornUrl('/file/picture'),
+        upload_url: this.$http.adornUrl('/file/data'),
 
         formItemList:{},
         dataForm: {},
