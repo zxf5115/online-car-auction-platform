@@ -237,6 +237,31 @@
 
           <el-card class="box-card mt10" shadow="never">
             <div slot="header" class="clearfix color">
+              <span>{{ $t('order.other_info') }}</span>
+            </div>
+            <div class="text item">
+              <el-form-item :label="$t('order.delivery_quantity')" prop="delivery_quantity">
+                <el-input-number :min="1" :placeholder="$t('order.delivery_quantity')" v-model="dataForm.delivery_quantity"></el-input-number>
+              </el-form-item>
+
+              <el-form-item :label="$t('order.delivery_date')" prop="delivery_date">
+                <el-date-picker v-model="dataForm.delivery_date" type="date" :placeholder="$t('order.delivery_date')"></el-date-picker>
+              </el-form-item>
+
+              <el-form-item>
+                <el-button v-if="isAuth('module:order:handle')" type="primary" @click="dataFormSubmit()">
+                  {{ $t('common.confirm') }}
+                </el-button>
+                <el-button @click="resetForm()">
+                  {{ $t('common.reset') }}
+                </el-button>
+              </el-form-item>
+            </div>
+          </el-card>
+
+
+          <el-card class="box-card mt10" shadow="never">
+            <div slot="header" class="clearfix color">
               <el-row>
                 <el-col :span="12">
                   <span>{{ $t('order.logistics_info') }}</span>
@@ -307,6 +332,9 @@
         cerificate_front_picture: [],
         cerificate_behind_picture: [],
         dataForm:{
+          id: 0,
+          delivery_quantity: 1,
+          delivery_date: '',
           car: {
             brand_title: '',
             shape_title: '',
@@ -376,6 +404,8 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
+                this.dataForm.delivery_quantity    = data.data.delivery_quantity || ''
+                this.dataForm.delivery_date        = data.data.delivery_date || ''
                 this.dataForm.car.brand_title      = data.data.brand.title || ''
                 this.dataForm.car.shape_title      = data.data.shape.title || ''
                 this.dataForm.car.sell_money       = data.data.car.sell_money
@@ -429,6 +459,33 @@
             this.dataList = data.data
           }
         })
+      },
+      // 表单提交
+      dataFormSubmit () {
+        this.$refs['dataForm'].validate((valid) => {
+          if (valid) {
+            this.$http({
+              url: this.$http.adornUrl(`/order/handle`),
+              method: 'post',
+              data: this.$http.adornData({
+                'id': this.dataForm.id,
+                'delivery_quantity': this.dataForm.delivery_quantity,
+                'delivery_date': this.dataForm.delivery_date,
+              })
+            }).then(({data}) => {
+              if (data && data.status === 200) {
+                this.$message.success(this.$t('common.handle_success'));
+                this.$router.go(-1);
+              } else {
+                this.$message.error(this.$t(data.message))
+              }
+            })
+          }
+        })
+      },
+      resetForm:function()
+      {
+        this.$refs['dataForm'].resetFields();
       },
       // 删除
       deleteHandle (id) {

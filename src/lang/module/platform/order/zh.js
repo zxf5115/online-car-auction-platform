@@ -6,6 +6,7 @@ export const order = {
   address_info: '收货信息',
   logistics_info: '物流信息',
   logistics_create: '物流',
+  other_info: '其他信息',
 
   pay_finish: '确认支付',
   take_finish: '确认提货',
@@ -15,6 +16,8 @@ export const order = {
   order_no: '订单号',
   nickname: '购买用户',
   username: '购买账号',
+  delivery_date: '提货日期',
+  delivery_quantity: '交付数量',
   pay_money: '价格(万元)',
   order_status: '订单状态',
   create_time: '下单时间',
