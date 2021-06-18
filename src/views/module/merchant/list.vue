@@ -63,12 +63,12 @@
 
           <el-table-column :label="$t('common.handle')" fixed="right" width="380">
             <template slot-scope="scope">
-              <el-button v-if="isAuth('module:merchant:view') && scope.row.certification.audit_status.value != 0" type="info" icon="el-icon-view" @click="$router.push({name: 'module_merchant_view', query: {id: scope.row.id}})">
+              <el-button v-if="isAuth('module:merchant:view') && scope.row.certification && scope.row.certification.audit_status.value != 0" type="info" icon="el-icon-view" @click="$router.push({name: 'module_merchant_view', query: {id: scope.row.id}})">
                 {{ $t('common.view') }}
               </el-button>
 
               <el-button v-if="isAuth('module:merchant:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_merchant_form', query: {id: scope.row.id}})">
-                <span v-if="scope.row.certification.audit_status.value == 0">
+                <span v-if="scope.row.certification && scope.row.certification.audit_status.value == 0">
                   {{ $t('common.audit') }}
                 </span>
                 <span v-else>
@@ -76,7 +76,7 @@
                 </span>
               </el-button>
 
-              <el-button v-if="isAuth('module:merchant:enable') && scope.row.certification.audit_status.value == 1" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
+              <el-button v-if="isAuth('module:merchant:enable') && scope.row.certification && scope.row.certification.audit_status.value == 1" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
                 <span v-if="scope.row.status.value == 1">
                   {{ $t('merchant.enable') }}
                 </span>
@@ -85,7 +85,7 @@
                 </span>
               </el-button>
 
-              <el-button v-if="isAuth('module:merchant:delete') && scope.row.certification.audit_status.value != 0" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
+              <el-button v-if="isAuth('module:merchant:delete') && scope.row.certification && scope.row.certification.audit_status.value != 0" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
                 {{ $t('common.delete') }}
               </el-button>
             </template>
