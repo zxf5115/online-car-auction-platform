@@ -103,4 +103,26 @@ export const car = {
       },
     }
   },
+
+  store: {
+    list: '门店列表',
+    from: '门店操作',
+    view: '门店详情',
+
+    title: '门店标题',
+    mobile: '门店电话',
+    address: '门店地址',
+
+    rules: {
+      title: {
+        require: '门店标题不能为空',
+      },
+      mobile: {
+        require: '门店电话不能为空',
+      },
+      address: {
+        require: '门店地址不能为空',
+      },
+    },
+  }
 }
