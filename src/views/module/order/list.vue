@@ -96,9 +96,11 @@
           </el-table-column>
 
           <el-table-column :label="$t('order.logistics_info')">
-            <el-button type="text" @click="dialogTableVisible = true">
-              {{ $t('order.logistics_info') }}
-            </el-button>
+            <template slot-scope="scope">
+              <el-button type="text" @click="loadLogisticsList(scope.row.id)">
+                {{ $t('order.logistics_info') }}
+              </el-button>
+            </template>
           </el-table-column>
 
           <el-table-column :label="$t('order.pay_money')">
@@ -150,10 +152,10 @@
         <el-dialog :title="$t('order.logistics_info')" :visible.sync="dialogTableVisible">
           <el-timeline>
             <el-timeline-item
-              v-for="(activity, index) in activities"
+              v-for="(item, index) in logisticsList"
               :key="index"
-              :timestamp="activity.timestamp">
-              {{activity.content}}
+              :timestamp="item.logistics_time">
+              [{{item.logistics_status.text}}] {{item.content}}
             </el-timeline-item>
           </el-timeline>
         </el-dialog>
@@ -181,17 +183,8 @@
       return {
         model: 'order',
         dialogTableVisible: false,
-        activities: [{
-          content: '活动按期开始',
-          timestamp: '2018-04-15'
-        }, {
-          content: '通过审核',
-          timestamp: '2018-04-13'
-        }, {
-          content: '创建成功',
-          timestamp: '2018-04-11'
-        }],
         sourceList: [],
+        logisticsList: [],
         orderStatus: [
           {'id': 0, 'title': '待付款'},
           {'id': 1, 'title': '待提货'},
@@ -222,6 +215,23 @@
         }).then(({data}) => {
           if (data && data.status === 200) {
             this.sourceList = data.data
+          } else {
+            this.$message.error(this.$t(data.message))
+          }
+        })
+      },
+      loadLogisticsList(id) {
+        this.$http({
+          url: this.$http.adornUrl('/order/logistics/select'),
+          method: 'get',
+          params: this.$http.adornParams({
+            order_id: id
+          })
+        }).then(({data}) => {
+          if (data && data.status === 200) {
+            this.dialogTableVisible = true
+
+            this.logisticsList = data.data
           } else {
             this.$message.error(this.$t(data.message))
           }

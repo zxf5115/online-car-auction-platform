@@ -21,7 +21,9 @@
                   <div class="default_day_sale">
                     用户总数
                     <span class="blue">
-                      {{ statistical.member_total }}
+                      <el-button type="text" @click="$router.push({name: 'module_member_list'})">
+                        {{ statistical.member_total }}
+                      </el-button>
                     </span>
                   </div>
                 </el-col>
@@ -38,7 +40,9 @@
                   <div class="default_day_sale">
                     新增用户
                     <span class="blue">
-                      {{ statistical.today_member_total }}
+                      <el-button type="text" @click="$router.push({name: 'module_member_list'})">
+                        {{ statistical.today_member_total }}
+                      </el-button>
                     </span>
                   </div>
                 </el-col>
@@ -55,7 +59,9 @@
                   <div class="default_day_sale">
                     车商新增
                     <span class="blue">
-                      {{ statistical.merchant_total }}
+                      <el-button type="text" @click="$router.push({name: 'module_merchant_list'})">
+                        {{ statistical.merchant_total }}
+                      </el-button>
                     </span>
                   </div>
                 </el-col>
@@ -88,7 +94,9 @@
                     <div class="default_day_sale">
                       海外车源
                       <span class="blue">
-                        {{ statistical.car_out_total }}
+                        <el-button type="text" @click="$router.push({name: 'module_car_list'})">
+                          {{ statistical.car_out_total }}
+                        </el-button>
                       </span>
                     </div>
                   </el-col>
@@ -105,7 +113,9 @@
                     <div class="default_day_sale">
                       国内车源
                       <span class="blue">
-                        {{ statistical.car_in_total }}
+                        <el-button type="text" @click="$router.push({name: 'module_car_list'})">
+                          {{ statistical.car_in_total }}
+                        </el-button>
                       </span>
                     </div>
                   </el-col>
@@ -122,7 +132,9 @@
                     <div class="default_day_sale">
                       二手车源
                       <span class="blue">
-                        {{ statistical.car_old_total }}
+                        <el-button type="text" @click="$router.push({name: 'module_car_list'})">
+                          {{ statistical.car_old_total }}
+                        </el-button>
                       </span>
                     </div>
                   </el-col>
@@ -159,7 +171,9 @@
                     <div class="default_day_sale">
                       新增待支付订单
                       <span class="blue">
-                        {{ statistical.wait_order_total }}
+                        <el-button type="text" @click="$router.push({name: 'module_order_list'})">
+                          {{ statistical.wait_order_total }}
+                        </el-button>
                       </span>
                     </div>
                   </el-col>
@@ -176,7 +190,9 @@
                     <div class="default_day_sale">
                       新增完成订单
                       <span class="blue">
-                        {{ statistical.finish_order_total }}
+                        <el-button type="text" @click="$router.push({name: 'module_order_list'})">
+                          {{ statistical.finish_order_total }}
+                        </el-button>
                       </span>
                     </div>
                   </el-col>
@@ -193,7 +209,9 @@
                     <div class="default_day_sale">
                       新增待提货订单
                       <span class="blue">
-                        {{ statistical.wait_take_order_total }}
+                        <el-button type="text" @click="$router.push({name: 'module_order_list'})">
+                          {{ statistical.wait_take_order_total }}
+                        </el-button>
                       </span>
                     </div>
                   </el-col>
