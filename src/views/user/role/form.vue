@@ -150,7 +150,7 @@
                 'id': this.dataForm.id || undefined,
                 'title': this.dataForm.title,
                 'content': this.dataForm.content,
-                'menu_id': this.$refs.menuListTree.getCheckedKeys()
+                'menu_id': [].concat(this.$refs.menuListTree.getCheckedKeys(), this.$refs.menuListTree.getHalfCheckedKeys())
 
               })
             }).then(({data}) => {
