@@ -112,6 +112,8 @@ export const car = {
     title: '门店标题',
     mobile: '门店电话',
     address: '门店地址',
+    longitude: '门店经度',
+    latitude: '门店纬度',
 
     rules: {
       title: {

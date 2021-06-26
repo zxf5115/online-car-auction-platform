@@ -29,6 +29,14 @@
             <el-input type="textarea" :placeholder="$t('car.store.address')" v-model="dataForm.address"></el-input>
           </el-form-item>
 
+          <el-form-item :label="$t('car.store.longitude')" prop="longitude">
+            <el-input :placeholder="$t('car.store.longitude')" v-model="dataForm.longitude"></el-input>
+          </el-form-item>
+
+          <el-form-item :label="$t('car.store.latitude')" prop="latitude">
+            <el-input :placeholder="$t('car.store.latitude')" v-model="dataForm.latitude"></el-input>
+          </el-form-item>
+
           <el-form-item :label="$t('common.sort')" prop="sort">
             <el-input-number :placeholder="$t('common.please_input')+$t('common.sort')" v-model="dataForm.sort"></el-input-number>
           </el-form-item>
@@ -63,6 +71,8 @@
           title: '',
           mobile: '',
           address: '',
+          longitude: '',
+          latitude: '',
           sort: 0,
         },
         dataRule:
@@ -96,10 +106,12 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.title   = data.data.title
-                this.dataForm.mobile  = data.data.mobile
-                this.dataForm.address = data.data.address
-                this.dataForm.sort    = data.data.sort
+                this.dataForm.title     = data.data.title
+                this.dataForm.mobile    = data.data.mobile
+                this.dataForm.address   = data.data.address
+                this.dataForm.longitude = data.data.longitude
+                this.dataForm.latitude  = data.data.latitude
+                this.dataForm.sort      = data.data.sort
               }
             })
           }
@@ -117,6 +129,8 @@
                 'title': this.dataForm.title,
                 'mobile': this.dataForm.mobile,
                 'address': this.dataForm.address,
+                'longitude': this.dataForm.longitude,
+                'latitude': this.dataForm.latitude,
                 'sort': this.dataForm.sort,
               })
             }).then(({data}) => {
