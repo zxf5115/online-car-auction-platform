@@ -273,7 +273,7 @@
           fluid : true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
           sources : [ {
             type : "",
-              src : ""//url地址
+            src : ""//url地址
             } ],
           poster : "", //你的封面地址
           // width: document.documentElement.clientWidth,
@@ -317,26 +317,30 @@
                 this.dataForm.image  = data.data.image
                 this.dataForm.config = data.data.config
 
-                this.dataForm.user.certification_type           = data.data.member.certification.type.value
-                this.dataForm.user.realname           = data.data.member.certification.realname
-                this.dataForm.user.mobile             = data.data.member.certification.mobile
-                this.dataForm.user.certificate_type   = data.data.member.certification.certificate_type.value
-                this.dataForm.user.certificate_no     = data.data.member.certification.certificate_no
-                this.dataForm.user.bank_card_no       = data.data.member.certification.bank_card_no
-                this.dataForm.user.cerificate_behind_picture       = data.data.member.certification.cerificate_behind_picture
-                this.dataForm.user.cerificate_front_picture       = data.data.member.certification.cerificate_front_picture
-                this.dataForm.user.type = data.data.member.certification.type.value
-                this.dataForm.user.audit_status       = data.data.member.certification.audit_status.text
-                this.dataForm.user.audit_content      = data.data.member.certification.audit_content
-
-                this.cerificate_front_picture.push(data.data.member.cerificate_front_picture);
-                this.cerificate_behind_picture.push(data.data.member.cerificate_behind_picture);
-
                 this.playerOptions.sources = [
                 {
                   type : "",
-                  src : this.dataForm.video_url//url地址
+                  src : data.data.vedio_url//url地址
                 }]
+
+                if(data.data.member.certification)
+                {
+
+                  this.dataForm.user.certification_type           = data.data.member.certification.type.value
+                  this.dataForm.user.realname           = data.data.member.certification.realname
+                  this.dataForm.user.mobile             = data.data.member.certification.mobile
+                  this.dataForm.user.certificate_type   = data.data.member.certification.certificate_type.value
+                  this.dataForm.user.certificate_no     = data.data.member.certification.certificate_no
+                  this.dataForm.user.bank_card_no       = data.data.member.certification.bank_card_no
+                  this.dataForm.user.cerificate_behind_picture       = data.data.member.certification.cerificate_behind_picture
+                  this.dataForm.user.cerificate_front_picture       = data.data.member.certification.cerificate_front_picture
+                  this.dataForm.user.type = data.data.member.certification.type.value
+                  this.dataForm.user.audit_status       = data.data.member.certification.audit_status.text
+                  this.dataForm.user.audit_content      = data.data.member.certification.audit_content
+
+                  this.cerificate_front_picture.push(data.data.member.cerificate_front_picture);
+                  this.cerificate_behind_picture.push(data.data.member.cerificate_behind_picture);
+                }
               }
             })
           }

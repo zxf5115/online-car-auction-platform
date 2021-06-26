@@ -131,7 +131,12 @@
                   if (data && data.status === 200) {
                     this.checkedMenu = this.menuListId.length === data.data.permission.length
 
-                    this.$refs.menuListTree.setCheckedKeys(data.data.permission)
+                    data.data.permission.forEach((i,n) => {
+                      var node = this.$refs.menuListTree.getNode(i);
+                      if (node.isLeaf) {
+                        this.$refs.menuListTree.setChecked(node, true);
+                      }
+                    });
                   }
                 })
               }
