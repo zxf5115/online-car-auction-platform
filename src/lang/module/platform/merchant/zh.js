@@ -14,7 +14,7 @@ export const merchant = {
 
   people: '个人认证',
   bank_card: '银行卡认证',
-  company: '企业认证',
+  company: '车商认证',
 
   certification_type: '认证类型',
   audit_status: '审核状态',

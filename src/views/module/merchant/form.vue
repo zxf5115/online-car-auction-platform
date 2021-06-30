@@ -103,7 +103,7 @@
 
           <el-form-item>
             <el-button v-if="isAuth('module:merchant:handle')" type="primary" @click="dataFormSubmit()">
-              <span v-if="1 == dataForm.audit_status.value">
+              <span v-if="1 == dataForm.audit_status">
                 {{ $t('common.confirm') }}
               </span>
               <span v-else>
@@ -185,9 +185,11 @@
                   this.audit_status       = data.data.certification.audit_status.value
                 }
 
-
-                this.dataForm.picture           = data.data.pictureData
-                this.pictureList = data.data.pictureList
+                if(data.data.pictureData && data.data.pictureData[0])
+                {
+                  this.dataForm.picture = data.data.pictureData
+                  this.pictureList      = data.data.pictureList
+                }
               }
             })
           }

@@ -171,20 +171,24 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.certification_type           = data.data.certification.type.value
-                this.dataForm.realname           = data.data.certification.realname
-                this.dataForm.mobile             = data.data.certification.mobile
-                this.dataForm.certificate_type   = data.data.certification.certificate_type.value
-                this.dataForm.certificate_no     = data.data.certification.certificate_no
-                this.dataForm.bank_card_no       = data.data.certification.bank_card_no
-                this.dataForm.cerificate_behind_picture       = data.data.certification.cerificate_behind_picture
-                this.dataForm.cerificate_front_picture       = data.data.certification.cerificate_front_picture
-                this.dataForm_type = data.data.certification.type.value
-                this.dataForm.audit_status       = data.data.certification.audit_status.text
-                this.dataForm.audit_content      = data.data.certification.audit_content
 
-                this.cerificate_front_picture.push(data.data.cerificate_front_picture);
-                this.cerificate_behind_picture.push(data.data.cerificate_behind_picture);
+                if(data.data.certification)
+                {
+                  this.dataForm.certification_type           = data.data.certification.type.value
+                  this.dataForm.realname           = data.data.certification.realname
+                  this.dataForm.mobile             = data.data.certification.mobile
+                  this.dataForm.certificate_type   = data.data.certification.certificate_type.value
+                  this.dataForm.certificate_no     = data.data.certification.certificate_no
+                  this.dataForm.bank_card_no       = data.data.certification.bank_card_no
+                  this.dataForm.cerificate_behind_picture       = data.data.certification.cerificate_behind_picture
+                  this.dataForm.cerificate_front_picture       = data.data.certification.cerificate_front_picture
+                  this.dataForm_type = data.data.certification.type.value
+                  this.dataForm.audit_status       = data.data.certification.audit_status.text
+                  this.dataForm.audit_content      = data.data.certification.audit_content
+
+                  this.cerificate_front_picture.push(data.data.certification.cerificate_front_picture);
+                  this.cerificate_behind_picture.push(data.data.certification.cerificate_behind_picture);
+                }
               }
             })
           }
