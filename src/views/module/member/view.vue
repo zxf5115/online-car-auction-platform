@@ -31,13 +31,6 @@
                 <el-col :span="18">
                   <el-row>
                     <el-col :span="12">
-                      <el-form-item :label="$t('member.username')">
-                        {{ dataForm.username }}
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="12">
                       <el-form-item :label="$t('member.nickname')">
                         {{ dataForm.nickname }}
                       </el-form-item>
@@ -79,7 +72,7 @@
 
               <el-form-item :label="$t('member.archive.area')">
                 <span v-if="dataForm.address">
-                  {{ dataForm.address.province_id.text || '' }} {{ dataForm.address.city_id.text || '' }} {{ dataForm.address.region_id.text || '' }}
+                  {{ dataForm.address.province_id || '' }} {{ dataForm.address.city_id || '' }} {{ dataForm.address.region_id || '' }}
                 </span>
               </el-form-item>
 
@@ -97,13 +90,13 @@
             <div class="text item">
               <el-form-item :label="$t('member.asset.cash_money')">
                 <span v-if="dataForm.asset">
-                  {{ dataForm.asset.cash_money || '' }}
+                  {{ dataForm.asset.cash_money || '0.00' }}
                 </span>
               </el-form-item>
 
               <el-form-item :label="$t('member.asset.credit_money')">
                 <span v-if="dataForm.asset">
-                  {{ dataForm.asset.credit_money || '' }}
+                  {{ dataForm.asset.credit_money || '0.00' }}
                 </span>
               </el-form-item>
             </div>

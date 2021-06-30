@@ -90,9 +90,9 @@
             </el-form-item>
           </div>
 
-          <div v-if="dataForm.audit_status == 0">
+          <div v-if="audit_status != 1">
             <el-form-item :label="$t('merchant.certification.audit_status')" prop="audit_status">
-              <el-switch v-model="dataForm.audit_status" active-value="1" :active-text="$t('merchant.audit_pass')" inactive-value="2" :inactive-text="$t('merchant.audit_unpass')">
+              <el-switch v-model="dataForm.audit_status" :active-value="1" :active-text="$t('merchant.audit_pass')" :inactive-value="2" :inactive-text="$t('merchant.audit_unpass')">
               </el-switch>
             </el-form-item>
 
@@ -103,7 +103,12 @@
 
           <el-form-item>
             <el-button v-if="isAuth('module:merchant:handle')" type="primary" @click="dataFormSubmit()">
-              {{ $t('common.confirm') }}
+              <span v-if="1 == dataForm.audit_status.value">
+                {{ $t('common.confirm') }}
+              </span>
+              <span v-else>
+                {{ $t('common.audit') }}
+              </span>
             </el-button>
             <el-button @click="resetForm()">
               {{ $t('common.reset') }}
@@ -130,6 +135,7 @@
           {'id': '1', 'title': '中华共和国居民身份证'},
           {'id': '2', 'title': '营业执照'},
         ],
+        audit_status: 0,
         dataForm:
         {
           id: 0,
@@ -140,7 +146,7 @@
           bank_card_no: '',
           picture: [],
           certification_type: '',
-          audit_status: '',
+          audit_status: 1,
           audit_content: '',
         },
         dataRule:
@@ -165,14 +171,20 @@
             }).then(({data}) => {
               if (data && data.status === 200) {
 
-                this.dataForm.realname           = data.data.certification.realname
-                this.dataForm.mobile             = data.data.certification.mobile
-                this.dataForm.certificate_type   = data.data.certification.certificate_type.value
-                this.dataForm.certificate_no     = data.data.certification.certificate_no
-                this.dataForm.bank_card_no       = data.data.certification.bank_card_no
-                this.dataForm.certification_type = data.data.certification.type.value
-                this.dataForm.audit_status       = data.data.certification.audit_status.value
-                this.dataForm.audit_content      = data.data.certification.audit_content
+                if(data.data.certification)
+                {
+                  this.dataForm.realname           = data.data.certification.realname
+                  this.dataForm.mobile             = data.data.certification.mobile
+                  this.dataForm.certificate_type   = data.data.certification.certificate_type.value
+                  this.dataForm.certificate_no     = data.data.certification.certificate_no
+                  this.dataForm.bank_card_no       = data.data.certification.bank_card_no
+                  this.dataForm.certification_type = data.data.certification.type.value
+                  this.dataForm.audit_status       = data.data.certification.audit_status.value
+                  this.dataForm.audit_content      = data.data.certification.audit_content
+
+                  this.audit_status       = data.data.certification.audit_status.value
+                }
+
 
                 this.dataForm.picture           = data.data.pictureData
                 this.pictureList = data.data.pictureList

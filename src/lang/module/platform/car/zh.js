@@ -88,6 +88,7 @@ export const car = {
       title: '配置名称',
       type: '配置类型',
       params: '配置参数',
+      pl_params: '配置参数，多个配置参数请使用英文逗号分隔',
       is_must: '是否必填',
 
       add: '添加',

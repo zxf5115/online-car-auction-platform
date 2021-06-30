@@ -13,10 +13,6 @@
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
-            <el-input v-model="dataForm.username" :placeholder="$t('common.please_input') + $t('member.username')" clearable>
-            </el-input>
-          </div>
-          <div>
             <el-input v-model="dataForm.nickname" :placeholder="$t('common.please_input') + $t('member.nickname')" clearable>
             </el-input>
           </div>
@@ -37,9 +33,6 @@
           </el-table-column>
 
           <el-table-column prop="id" :label="$t('common.id')" width="70">
-          </el-table-column>
-
-          <el-table-column prop="username" :label="$t('member.username')">
           </el-table-column>
 
           <el-table-column prop="nickname" :label="$t('member.nickname')">

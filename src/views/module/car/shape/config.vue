@@ -31,7 +31,7 @@
             </el-form-item>
 
             <el-form-item :label="$t('car.shape.config.params')" prop="params">
-              <el-input type="textarea" :placeholder="$t('car.shape.config.params')" v-model="item.params"></el-input>
+              <el-input type="textarea" :placeholder="$t('car.shape.config.pl_params')" v-model="item.params"></el-input>
             </el-form-item>
 
             <el-form-item :label="$t('car.shape.config.is_must')" prop="is_must">
@@ -43,6 +43,12 @@
 
             <el-input type="hidden" v-model="item.id"></el-input>
 
+            <el-form-item>
+              <el-button type="danger" @click="removeOption(index)">
+                {{ $t('car.shape.config.delete') }}
+              </el-button>
+            </el-form-item>
+
             <el-divider content-position="left">end</el-divider>
           </div>
 
@@ -53,10 +59,6 @@
 
             <el-button type="success" @click="addOption()">
               {{ $t('car.shape.config.add') }}
-            </el-button>
-
-            <el-button type="danger" @click="removeOption()">
-              {{ $t('car.shape.config.delete') }}
             </el-button>
 
             <el-button @click="resetForm()">
@@ -158,7 +160,7 @@
         that.dataForm.data.push({});
       },
       //删除购房人基本信息
-      removeOption(index) {
+      removeOption(index) {console.log(index);
         if (index >= 0) {
           this.dataForm.data.splice(index, 1);
         }

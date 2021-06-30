@@ -91,6 +91,9 @@
           ],
           title: [
             { required: true, message: this.$t('advertising.rules.title.require'), trigger: 'blur' },
+          ],
+          picture: [
+            { required: true, message: this.$t('advertising.rules.picture.require'), trigger: 'blur' },
           ]
         }
       };

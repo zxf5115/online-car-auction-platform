@@ -35,13 +35,6 @@
                 <el-col :span="18">
                   <el-row>
                     <el-col :span="12">
-                      <el-form-item :label="$t('member.username')">
-                        {{ dataForm.username }}
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="12">
                       <el-form-item :label="$t('member.nickname')" prop="nickname">
                         <el-input v-model="dataForm.nickname" :placeholder="$t('common.please_input') + $t('member.nickname')"></el-input>
                       </el-form-item>
@@ -76,8 +69,17 @@
                 <el-input v-model="dataForm.postcode" :placeholder="$t('common.please_input') + $t('member.address.postcode')"></el-input>
               </el-form-item>
 
-              <form-area ref="area" :province_id="dataForm.province_id" :city_id="dataForm.city_id" :region_id="dataForm.region_id"></form-area>
+              <el-form-item :label="$t('common.province')" prop="province_id">
+                <el-input v-model="dataForm.province_id" :placeholder="$t('common.please_input') + $t('common.province')"></el-input>
+              </el-form-item>
 
+              <el-form-item :label="$t('common.city')" prop="city_id">
+                <el-input v-model="dataForm.city_id" :placeholder="$t('common.please_input') + $t('common.city')"></el-input>
+              </el-form-item>
+
+              <el-form-item :label="$t('common.region')" prop="region_id">
+                <el-input v-model="dataForm.region_id" :placeholder="$t('common.please_input') + $t('common.region')"></el-input>
+              </el-form-item>
 
               <el-form-item :label="$t('member.address.address')" prop="address">
                 <el-input type="textarea" v-model="dataForm.address" :placeholder="$t('common.please_input') + $t('member.address.address')"></el-input>
@@ -139,9 +141,10 @@
           city_id : '',
           region_id : '',
           address: '',
+          create_time: '',
 
-          cash_money: '',
-          credit_money: '',
+          cash_money: '0.00',
+          credit_money: '0.00',
         },
         dataRule:
         {
@@ -170,23 +173,30 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.avatar   = data.data.avatar
-                this.dataForm.username = data.data.username
-                this.dataForm.nickname = data.data.nickname
-                this.dataForm.email    = data.data.email
-                this.dataForm.mobile   = data.data.mobile
-                this.dataForm.status   = data.data.status.value + ''
+                this.dataForm.avatar      = data.data.avatar
+                this.dataForm.username    = data.data.username
+                this.dataForm.nickname    = data.data.nickname
+                this.dataForm.email       = data.data.email
+                this.dataForm.mobile      = data.data.mobile
+                this.dataForm.status      = data.data.status.value + ''
+                this.dataForm.create_time = data.data.create_time
 
-                this.dataForm.name        = data.data.address.name
-                this.dataForm.mobile      = data.data.address.mobile
-                this.dataForm.postcode    = data.data.address.postcode
-                this.dataForm.province_id = data.data.address.province_id.value
-                this.dataForm.city_id     = data.data.address.city_id.value
-                this.dataForm.region_id   = data.data.address.region_id.value
-                this.dataForm.address     = data.data.address.address
+                if(data.data.address)
+                {
+                  this.dataForm.name        = data.data.address.name
+                  this.dataForm.mobile      = data.data.address.mobile
+                  this.dataForm.postcode    = data.data.address.postcode
+                  this.dataForm.province_id = data.data.address.province_id
+                  this.dataForm.city_id     = data.data.address.city_id
+                  this.dataForm.region_id   = data.data.address.region_id
+                  this.dataForm.address     = data.data.address.address
+                }
 
-                this.dataForm.cash_money   = data.data.asset.cash_money
-                this.dataForm.credit_money = data.data.asset.credit_money
+                if(data.data.asset)
+                {
+                  this.dataForm.cash_money   = data.data.asset.cash_money
+                  this.dataForm.credit_money = data.data.asset.credit_money
+                }
               }
             })
           }
@@ -206,9 +216,9 @@
                 'name': this.dataForm.name,
                 'mobile': this.dataForm.mobile,
                 'postcode': this.dataForm.postcode,
-                'province_id': this.$refs.area.province_id,
-                'city_id': this.$refs.area.city_id,
-                'region_id': this.$refs.area.region_id,
+                'province_id': this.dataForm.province_id,
+                'city_id': this.dataForm.city_id,
+                'region_id': this.dataForm.region_id,
                 'address': this.dataForm.address,
               })
             }).then(({data}) => {

@@ -67,12 +67,12 @@
                 {{ $t('common.view') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:merchant:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_merchant_form', query: {id: scope.row.id}})">
-                <span v-if="scope.row.certification && scope.row.certification.audit_status.value == 0">
-                  {{ $t('common.audit') }}
+              <el-button v-if="isAuth('module:merchant:form')" :type="1 == scope.row.certification.audit_status.value ? 'primary' : 'warning'" icon="el-icon-edit" @click="$router.push({name: 'module_merchant_form', query: {id: scope.row.id}})">
+                <span v-if="scope.row.certification && scope.row.certification.audit_status.value == 1">
+                  {{ $t('common.update') }}
                 </span>
                 <span v-else>
-                  {{ $t('common.update') }}
+                  {{ $t('common.audit') }}
                 </span>
               </el-button>
 
@@ -123,7 +123,7 @@
         certificationList: [
           {'id': 1, 'title': '个人认证'},
           {'id': 2, 'title': '银行卡认证'},
-          {'id': 3, 'title': '企业认证'},
+          {'id': 3, 'title': '车商认证'},
         ],
         dataForm: [
           'username',

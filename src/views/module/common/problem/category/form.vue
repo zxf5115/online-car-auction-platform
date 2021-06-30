@@ -54,7 +54,7 @@
         dataRule:
         {
           title: [
-            { required: true, message: this.$t('/problem.category.rules.title.require'), trigger: 'blur' },
+            { required: true, message: this.$t('problem.category.rules.title.require'), trigger: 'blur' },
           ]
         }
       };
