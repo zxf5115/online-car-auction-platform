@@ -13,7 +13,7 @@
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
-            <el-input v-model="dataForm.username" :placeholder="$t('common.please_input') + $t('merchant.username')" clearable>
+            <el-input v-model="dataForm.nickname" :placeholder="$t('common.please_input') + $t('merchant.nickname')" clearable>
             </el-input>
           </div>
           <div>
@@ -43,7 +43,7 @@
           <el-table-column prop="id" :label="$t('common.id')" width="70">
           </el-table-column>
 
-          <el-table-column prop="username" :label="$t('merchant.username')">
+          <el-table-column prop="nickname" :label="$t('merchant.nickname')">
           </el-table-column>
 
           <el-table-column :label="$t('merchant.certification_type')">
@@ -63,31 +63,33 @@
 
           <el-table-column :label="$t('common.handle')" fixed="right" width="380">
             <template slot-scope="scope">
-              <el-button v-if="isAuth('module:merchant:view') && scope.row.certification && scope.row.certification.audit_status.value != 0" type="info" icon="el-icon-view" @click="$router.push({name: 'module_merchant_view', query: {id: scope.row.id}})">
-                {{ $t('common.view') }}
-              </el-button>
+              <div v-if="scope.row.certification">
+                <el-button v-if="isAuth('module:merchant:view') && scope.row.certification && scope.row.certification.audit_status.value != 0" type="info" icon="el-icon-view" @click="$router.push({name: 'module_merchant_view', query: {id: scope.row.id}})">
+                  {{ $t('common.view') }}
+                </el-button>
 
-              <el-button v-if="isAuth('module:merchant:form')" :type="1 == scope.row.certification.audit_status.value ? 'primary' : 'warning'" icon="el-icon-edit" @click="$router.push({name: 'module_merchant_form', query: {id: scope.row.id}})">
-                <span v-if="scope.row.certification && scope.row.certification.audit_status.value == 1">
-                  {{ $t('common.update') }}
-                </span>
-                <span v-else>
-                  {{ $t('common.audit') }}
-                </span>
-              </el-button>
+                <el-button v-if="isAuth('module:merchant:form')" :type="1 == scope.row.certification.audit_status.value ? 'primary' : 'warning'" icon="el-icon-edit" @click="$router.push({name: 'module_merchant_form', query: {id: scope.row.id}})">
+                  <span v-if="scope.row.certification && scope.row.certification.audit_status.value == 1">
+                    {{ $t('common.update') }}
+                  </span>
+                  <span v-else>
+                    {{ $t('common.audit') }}
+                  </span>
+                </el-button>
 
-              <el-button v-if="isAuth('module:merchant:enable') && scope.row.certification && scope.row.certification.audit_status.value == 1" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
-                <span v-if="scope.row.status.value == 1">
-                  {{ $t('merchant.enable') }}
-                </span>
-                <span v-else>
-                  {{ $t('merchant.disable') }}
-                </span>
-              </el-button>
+                <el-button v-if="isAuth('module:merchant:enable') && scope.row.certification && scope.row.certification.audit_status.value == 1" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
+                  <span v-if="scope.row.status.value == 1">
+                    {{ $t('merchant.enable') }}
+                  </span>
+                  <span v-else>
+                    {{ $t('merchant.disable') }}
+                  </span>
+                </el-button>
 
-              <el-button v-if="isAuth('module:merchant:delete') && scope.row.certification && scope.row.certification.audit_status.value != 0" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
-                {{ $t('common.delete') }}
-              </el-button>
+                <el-button v-if="isAuth('module:merchant:delete') && scope.row.certification && scope.row.certification.audit_status.value != 0" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
+                  {{ $t('common.delete') }}
+                </el-button>
+              </div>
             </template>
           </el-table-column>
 
@@ -126,7 +128,7 @@
           {'id': 3, 'title': '车商认证'},
         ],
         dataForm: [
-          'username',
+          'nickname',
           'certification_type',
           'certification_audit_status',
         ],
