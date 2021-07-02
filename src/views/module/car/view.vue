@@ -182,7 +182,7 @@
 <!--  justify="center" -->
               <el-row type="flex" class="row-bg">
                 <el-col :span="3" v-for="(item, index) in dataForm.image" :key="index">
-                  <el-image style="width: 100px;" :src="item" :preview-src-list="dataForm.image">
+                  <el-image style="width: auto;height: 100px;" :src="item" :preview-src-list="dataForm.image">
                     <div slot="error" class="image-slot">
                       <i class="el-icon-picture-outline"></i>
                     </div>
