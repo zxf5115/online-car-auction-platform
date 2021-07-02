@@ -38,7 +38,7 @@
           <el-table-column prop="title" :label="$t('advertising.title')">
           </el-table-column>
 
-          <el-table-column prop="picture" :label="$t('advertising.picture')">
+          <!-- <el-table-column prop="picture" :label="$t('advertising.picture')">
             <template slot-scope="scope">
               <el-image style="width: 40px;" :src="scope.row.picture">
                 <div slot="error" class="image-slot">
@@ -46,7 +46,7 @@
                 </div>
               </el-image>
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
           <el-table-column prop="sort" :label="$t('common.sort')">
           </el-table-column>

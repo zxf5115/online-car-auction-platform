@@ -179,7 +179,7 @@
                   this.dataForm.certificate_no     = data.data.certification.certificate_no
                   this.dataForm.bank_card_no       = data.data.certification.bank_card_no
                   this.dataForm.certification_type = data.data.certification.type.value
-                  this.dataForm.audit_status       = data.data.certification.audit_status.value
+                  this.dataForm.audit_status       = data.data.certification.audit_status.value || 1
                   this.dataForm.audit_content      = data.data.certification.audit_content
 
                   this.audit_status       = data.data.certification.audit_status.value
