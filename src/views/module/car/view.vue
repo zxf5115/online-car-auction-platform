@@ -244,7 +244,7 @@
           sell_status: '',
           create_time: '',
           config: {},
-          video_url: '',
+          vedio_url: '',
           image: {},
           user: {
             id: 0,
@@ -306,7 +306,7 @@
               if (data && data.status === 200) {
                 this.dataForm.brand_title      = data.data.brand.title || ''
                 this.dataForm.shape_title      = data.data.shape.title || ''
-                this.dataForm.video_url        = data.data.video_url || ''
+                this.dataForm.vedio_url        = data.data.vedio_url || ''
                 this.dataForm.sell_money       = data.data.sell_money
                 this.dataForm.other_money      = data.data.other_money
                 this.dataForm.browse_total     = data.data.browse_total

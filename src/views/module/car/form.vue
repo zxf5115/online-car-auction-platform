@@ -180,9 +180,9 @@
                 {{ $t('car.car_image') }}
               </el-divider>
 
-              <el-row type="flex" class="row-bg" justify="center">
-                <el-col :span="5" v-for="(item, index) in dataForm.image" :key="index">
-                  <el-image style="width: 100px;" :src="item" :preview-src-list="dataForm.image">
+              <el-row type="flex" class="row-bg">
+                <el-col :span="3" v-for="(item, index) in dataForm.image" :key="index">
+                  <el-image style="width: auto;height: 100px;" :src="item" :preview-src-list="dataForm.image">
                     <div slot="error" class="image-slot">
                       <i class="el-icon-picture-outline"></i>
                     </div>
@@ -221,7 +221,7 @@
 
           <div class="mt10">
             <el-form-item :label="$t('car.audit_status')" prop="audit_status">
-              <el-switch v-model="dataForm.audit_status" active-value="1" :active-text="$t('merchant.audit_pass')" inactive-value="2" :inactive-text="$t('merchant.audit_unpass')">
+              <el-switch v-model="dataForm.audit_status" :active-value="1" :active-text="$t('merchant.audit_pass')" :inactive-value="2" :inactive-text="$t('merchant.audit_unpass')">
               </el-switch>
             </el-form-item>
 
@@ -263,11 +263,11 @@
           browse_total: 0,
           collection_total: 0,
           sell_status: '',
-          audit_status: '',
+          audit_status: 1,
           audit_content: '',
           create_time: '',
           config: {},
-          video_url: '',
+          vedio_url: '',
           image: {},
           user: {
             id: 0,
@@ -327,37 +327,40 @@
               if (data && data.status === 200) {
                 this.dataForm.brand_title      = data.data.brand.title || ''
                 this.dataForm.shape_title      = data.data.shape.title || ''
-                this.dataForm.video_url        = data.data.video_url || ''
+                this.dataForm.vedio_url        = data.data.vedio_url || ''
                 this.dataForm.sell_money       = data.data.sell_money
                 this.dataForm.other_money      = data.data.other_money
                 this.dataForm.browse_total     = data.data.browse_total
                 this.dataForm.collection_total = data.data.collection_total
                 this.dataForm.sell_status      = data.data.sell_status.text
-                this.dataForm.audit_status     = data.data.audit_status.value + ''
+                this.dataForm.audit_status     = data.data.audit_status.value == 2 ? 2 : 1
                 this.dataForm.audit_content    = data.data.audit_content
                 this.dataForm.create_time      = data.data.create_time
-
+console.log(this.dataForm.audit_status);
                 this.dataForm.image  = data.data.image
                 this.dataForm.config = data.data.config
-
-                this.dataForm.user.certification_type           = data.data.member.certification.type.value
-                this.dataForm.user.realname           = data.data.member.certification.realname
-                this.dataForm.user.mobile             = data.data.member.certification.mobile
-                this.dataForm.user.certificate_type   = data.data.member.certification.certificate_type.value
-                this.dataForm.user.certificate_no     = data.data.member.certification.certificate_no
-                this.dataForm.user.bank_card_no       = data.data.member.certification.bank_card_no
-                this.dataForm.user.cerificate_behind_picture       = data.data.member.certification.cerificate_behind_picture
-                this.dataForm.user.cerificate_front_picture       = data.data.member.certification.cerificate_front_picture
-                this.dataForm.user.type = data.data.member.certification.type.value
-
-                this.cerificate_front_picture.push(data.data.member.cerificate_front_picture);
-                this.cerificate_behind_picture.push(data.data.member.cerificate_behind_picture);
 
                 this.playerOptions.sources = [
                 {
                   type : "",
-                  src : this.dataForm.video_url//url地址
+                  src : this.dataForm.vedio_url//url地址
                 }]
+
+                if(data.data.member.certification)
+                {
+                  this.dataForm.user.certification_type           = data.data.member.certification.type.value
+                  this.dataForm.user.realname           = data.data.member.certification.realname
+                  this.dataForm.user.mobile             = data.data.member.certification.mobile
+                  this.dataForm.user.certificate_type   = data.data.member.certification.certificate_type.value
+                  this.dataForm.user.certificate_no     = data.data.member.certification.certificate_no
+                  this.dataForm.user.bank_card_no       = data.data.member.certification.bank_card_no
+                  this.dataForm.user.cerificate_behind_picture       = data.data.member.certification.cerificate_behind_picture
+                  this.dataForm.user.cerificate_front_picture       = data.data.member.certification.cerificate_front_picture
+                  this.dataForm.user.type = data.data.member.certification.type.value
+
+                  this.cerificate_front_picture.push(data.data.member.cerificate_front_picture);
+                  this.cerificate_behind_picture.push(data.data.member.cerificate_behind_picture);
+                }
               }
             })
           }

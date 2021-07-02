@@ -188,9 +188,9 @@
                 {{ $t('car.car_image') }}
               </el-divider>
 
-              <el-row type="flex" class="row-bg" justify="center">
-                <el-col :span="5" v-if="dataForm.car" v-for="(item, index) in dataForm.car.image" :key="index">
-                  <el-image style="width: 100px;" :src="item" :preview-src-list="dataForm.car.image">
+              <el-row type="flex" class="row-bg">
+                <el-col :span="3" v-if="dataForm.car" v-for="(item, index) in dataForm.car.image" :key="index">
+                  <el-image style="width: auto;height: 100px;" :src="item" :preview-src-list="dataForm.car.image">
                     <div slot="error" class="image-slot">
                       <i class="el-icon-picture-outline"></i>
                     </div>
@@ -345,7 +345,7 @@
             sell_status: '',
             create_time: '',
             config: {},
-            video_url: '',
+            vedio_url: '',
             image: {},
           },
           user: {
@@ -415,30 +415,33 @@
                 this.dataForm.car.sell_status      = data.data.car.sell_status.text
                 this.dataForm.car.create_time      = data.data.car.create_time
 
-                this.dataForm.car.video_url = data.data.car.video_url || ''
+                this.dataForm.car.vedio_url = data.data.car.vedio_url || ''
                 this.dataForm.car.image     = data.data.car.image
                 this.dataForm.car.config    = data.data.car.config
-
-                this.dataForm.user.certification_type           = data.data.member.certification.type.value
-                this.dataForm.user.realname           = data.data.member.certification.realname
-                this.dataForm.user.mobile             = data.data.member.certification.mobile
-                this.dataForm.user.certificate_type   = data.data.member.certification.certificate_type.value
-                this.dataForm.user.certificate_no     = data.data.member.certification.certificate_no
-                this.dataForm.user.bank_card_no       = data.data.member.certification.bank_card_no
-                this.dataForm.user.cerificate_behind_picture       = data.data.member.certification.cerificate_behind_picture
-                this.dataForm.user.cerificate_front_picture       = data.data.member.certification.cerificate_front_picture
-                this.dataForm.user.type = data.data.member.certification.type.value
-                this.dataForm.user.audit_status       = data.data.member.certification.audit_status.text
-                this.dataForm.user.audit_content      = data.data.member.certification.audit_content
-
-                this.cerificate_front_picture.push(data.data.member.cerificate_front_picture);
-                this.cerificate_behind_picture.push(data.data.member.cerificate_behind_picture);
 
                 this.playerOptions.sources = [
                 {
                   type : "",
-                  src : this.dataForm.car.video_url//url地址
+                  src : this.dataForm.car.vedio_url//url地址
                 }]
+
+                if(data.data.member.certification)
+                {
+                  this.dataForm.user.certification_type           = data.data.member.certification.type.value
+                  this.dataForm.user.realname           = data.data.member.certification.realname
+                  this.dataForm.user.mobile             = data.data.member.certification.mobile
+                  this.dataForm.user.certificate_type   = data.data.member.certification.certificate_type.value
+                  this.dataForm.user.certificate_no     = data.data.member.certification.certificate_no
+                  this.dataForm.user.bank_card_no       = data.data.member.certification.bank_card_no
+                  this.dataForm.user.cerificate_behind_picture       = data.data.member.certification.cerificate_behind_picture
+                  this.dataForm.user.cerificate_front_picture       = data.data.member.certification.cerificate_front_picture
+                  this.dataForm.user.type = data.data.member.certification.type.value
+                  this.dataForm.user.audit_status       = data.data.member.certification.audit_status.text
+                  this.dataForm.user.audit_content      = data.data.member.certification.audit_content
+
+                  this.cerificate_front_picture.push(data.data.member.cerificate_front_picture);
+                  this.cerificate_behind_picture.push(data.data.member.cerificate_behind_picture);
+                }
               }
             })
           }

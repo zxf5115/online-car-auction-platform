@@ -14,7 +14,7 @@
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
-            <el-input v-model="dataForm.member_nickanme" :placeholder="$t('common.please_input') + $t('member.nickanme')" clearable>
+            <el-input v-model="dataForm.member_nickanme" :placeholder="$t('common.please_input') + $t('merchant.nickname')" clearable>
             </el-input>
           </div>
           <div>
@@ -63,7 +63,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('common.handle')" fixed="right" width="420">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="480">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:car:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_car_view', query: {id: scope.row.id}})">
                 {{ $t('common.view') }}
