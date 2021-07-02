@@ -18,7 +18,7 @@
             </el-input>
           </div>
           <div>
-            <el-input v-model="dataForm.member_username" :placeholder="$t('common.please_input') + $t('member.username')" clearable>
+            <el-input v-model="dataForm.member_nickname" :placeholder="$t('common.please_input') + $t('member.nickname')" clearable>
             </el-input>
           </div>
           <div>
@@ -63,10 +63,10 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('order.username')">
+          <el-table-column :label="$t('order.nickname')">
             <template slot-scope="scope">
               <span v-if="scope.row.member">
-                {{ scope.row.member.username }}
+                {{ scope.row.member.nickname }}
               </span>
             </template>
           </el-table-column>
@@ -200,7 +200,7 @@
         ],
         dataForm: [
           'order_no',
-          'member_username',
+          'member_nickname',
           'source_id',
           'pay_money',
           'order_status'

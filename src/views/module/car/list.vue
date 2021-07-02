@@ -14,7 +14,7 @@
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
-            <el-input v-model="dataForm.member_username" :placeholder="$t('common.please_input') + $t('member.username')" clearable>
+            <el-input v-model="dataForm.member_nickanme" :placeholder="$t('common.please_input') + $t('member.nickanme')" clearable>
             </el-input>
           </div>
           <div>
@@ -41,7 +41,7 @@
 
           <el-table-column :label="$t('member.username')">
             <template slot-scope="scope" v-if="scope.row.member">
-              {{ scope.row.member.username }}
+              {{ scope.row.member.nickanme }}
             </template>
           </el-table-column>
 
@@ -120,7 +120,7 @@
         sourceList: [],
         dataForm: [
           'source_id',
-          'member_username'
+          'member_nickname'
         ]
       };
     },
