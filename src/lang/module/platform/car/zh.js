@@ -26,6 +26,9 @@ export const car = {
   create_time: '发布时间',
 
 
+  recommend: '推荐',
+  ordinary: '普通',
+
   // 来源
   source: {
     list: '来源列表',

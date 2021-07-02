@@ -63,14 +63,6 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('order.nickname')">
-            <template slot-scope="scope">
-              <span v-if="scope.row.member">
-                {{ scope.row.member.nickname }}
-              </span>
-            </template>
-          </el-table-column>
-
           <el-table-column :label="$t('car.source.title')">
             <template slot-scope="scope">
               <span v-if="scope.row.source">

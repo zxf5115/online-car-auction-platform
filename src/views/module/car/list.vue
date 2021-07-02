@@ -39,12 +39,6 @@
           <el-table-column prop="id" label="#"  width="70px">
           </el-table-column>
 
-          <el-table-column :label="$t('member.username')">
-            <template slot-scope="scope" v-if="scope.row.member">
-              {{ scope.row.member.nickanme }}
-            </template>
-          </el-table-column>
-
           <el-table-column :label="$t('merchant.nickname')">
             <template slot-scope="scope" v-if="scope.row.member">
               {{ scope.row.member.nickname }}
@@ -69,7 +63,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('common.handle')" fixed="right" width="380">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="420">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:car:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_car_view', query: {id: scope.row.id}})">
                 {{ $t('common.view') }}
@@ -85,6 +79,15 @@
                 </span>
                 <span v-else>
                   {{ $t('member.disable') }}
+                </span>
+              </el-button>
+
+              <el-button v-if="isAuth('module:car:recommend')" :type="scope.row.is_recommend == 2 ? 'danger' : 'success'" :icon="scope.row.is_recommend == 1 ? 'el-icon-check' : 'el-icon-close'" @click="recommendHandle(scope.row.id, scope.row.is_recommend)">
+                <span v-if="scope.row.is_recommend == 1">
+                  {{ $t('car.recommend') }}
+                </span>
+                <span v-else>
+                  {{ $t('car.ordinary') }}
                 </span>
               </el-button>
 
@@ -141,6 +144,40 @@
         }).then(() => {
           this.$http({
             url: this.$http.adornUrl('/'+this.model+'/enable'),
+            method: 'post',
+            data: {id: id}
+          }).then(({data}) => {
+            if (data && data.status === 200) {
+              this.$message({
+                message: this.$t('common.handle_success'),
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.getDataList()
+                }
+              })
+            } else {
+              this.$message.error(this.$t(data.message))
+            }
+          })
+        }).catch(() => {})
+      },
+      // 汽车推荐
+      recommendHandle (id, status) {
+        let message = '您确定要推荐当前汽车？'
+
+        if(1 == status)
+        {
+          message = '您确定要取消推荐当前汽车？'
+        }
+
+        this.$confirm(message, this.$t('common.prompt'), {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        }).then(() => {
+          this.$http({
+            url: this.$http.adornUrl('/'+this.model+'/recommend'),
             method: 'post',
             data: {id: id}
           }).then(({data}) => {
