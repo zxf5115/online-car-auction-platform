@@ -14,7 +14,7 @@
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
-            <el-input v-model="dataForm.member_nickanme" :placeholder="$t('common.please_input') + $t('merchant.nickname')" clearable>
+            <el-input v-model="dataForm.member_nickname" :placeholder="$t('common.please_input') + $t('merchant.nickname')" clearable>
             </el-input>
           </div>
           <div>

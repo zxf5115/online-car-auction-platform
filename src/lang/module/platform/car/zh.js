@@ -98,8 +98,11 @@ export const car = {
       delete: '删除',
 
       rules: {
+        type: {
+          require: '配置类型不能为空',
+        },
         title: {
-          require: '配置标题不能为空',
+          require: '配置名称不能为空',
         },
         params: {
           require: '配置参数不能为空',

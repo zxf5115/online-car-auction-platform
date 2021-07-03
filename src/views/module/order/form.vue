@@ -152,20 +152,12 @@
               <el-row>
                 <el-col :span="6">
                   <el-form-item :label="$t('car.sell_money')">
-                    <b class="red">
-                      <span v-if="dataForm.car">
-                        {{ dataForm.car.sell_money }}
-                      </span>
-                    </b>
+                    <el-input-number :precision="2" :step="1" :placeholder="$t('car.sell_money')" v-model="dataForm.car.sell_money"></el-input-number>
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
                   <el-form-item :label="$t('car.other_money')">
-                    <b class="red">
-                      <span v-if="dataForm.car">
-                        {{ dataForm.car.other_money }}
-                      </span>
-                    </b>
+                    <el-input-number :precision="2" :step="1" :placeholder="$t('car.other_money')" v-model="dataForm.car.other_money"></el-input-number>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -474,6 +466,8 @@
                 'id': this.dataForm.id,
                 'delivery_quantity': this.dataForm.delivery_quantity,
                 'delivery_date': this.dataForm.delivery_date,
+                'sell_money': this.dataForm.car.sell_money,
+                'other_money': this.dataForm.car.other_money,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {
