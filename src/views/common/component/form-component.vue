@@ -54,7 +54,7 @@
 
           <!-- 上传输入框 -->
           <el-upload v-else-if="item.type === 'upload'" class="avatar-uploader" :action="upload_url" :show-file-list="false" :headers="upload_headers" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" @input="handleValue" :data="item">
-            <img v-if="dataForm[item.title]" :src="dataForm[item.title]" class="avatar-upload">
+            <img v-if="dataForm[item.title]" :id="item.title" :src="dataForm[item.title]" class="avatar-upload">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-col>
@@ -121,6 +121,8 @@
                 {
                   this.dataForm[title] = value;
                 }
+
+                console.log(this.dataForm);
               });
             }
           })
@@ -146,9 +148,9 @@
         let title = res.data.title
         let url = res.data.url
 
-        this.dataForm[title] = url;
+        this.dataForm[title] = url
 
-        console.log(url);
+        let img = document.getElementById(title)
       },
       beforeAvatarUpload(file) {
         const isPicture = (file.type === 'image/jpeg' || file.type === 'image/png');
@@ -169,7 +171,7 @@
         this.$forceUpdate();
       },
     },
-    mounted(){},
+    watch(){},
     created() {
       this.init();
 
