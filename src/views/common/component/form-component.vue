@@ -121,8 +121,6 @@
                 {
                   this.dataForm[title] = value;
                 }
-
-                console.log(this.dataForm);
               });
             }
           })
@@ -151,6 +149,8 @@
         this.dataForm[title] = url
 
         let img = document.getElementById(title)
+
+        img.src = url
       },
       beforeAvatarUpload(file) {
         const isPicture = (file.type === 'image/jpeg' || file.type === 'image/png');
