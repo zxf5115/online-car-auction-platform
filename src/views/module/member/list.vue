@@ -53,7 +53,7 @@
           <el-table-column prop="create_time" :label="$t('common.create_time')">
           </el-table-column>
 
-          <el-table-column :label="$t('common.handle')" fixed="right" width="380">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="480">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:member:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_member_view', query: {id: scope.row.id}})">
                 {{ $t('common.view') }}
@@ -61,6 +61,10 @@
 
               <el-button v-if="isAuth('module:member:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_member_form', query: {id: scope.row.id}})">
                 {{ $t('common.update') }}
+              </el-button>
+
+              <el-button v-if="isAuth('module:merchant:form') && scope.row.certification&& 1 != scope.row.certification.audit_status.value" :type="1 == scope.row.certification.audit_status.value ? 'primary' : 'warning'" icon="el-icon-edit" @click="$router.push({name: 'module_merchant_form', query: {id: scope.row.id}})">
+                {{ $t('common.audit') }}
               </el-button>
 
               <el-button v-if="isAuth('module:member:enable')" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
