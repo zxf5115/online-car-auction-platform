@@ -16,8 +16,8 @@ export const car = {
   car_shape: '具体型号',
   car_color: '车辆颜色',
 
-  sell_money: '出售价格',
-  other_money: '其他费用',
+  sell_money: '出售价格(万元)',
+  other_money: '其他费用(万元)',
   browse_total: '用户浏览',
   collection_total: '收藏数量',
   sell_status: '出售进度',
