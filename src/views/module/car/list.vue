@@ -63,22 +63,13 @@
             </template>
           </el-table-column>
 
-          <el-table-column :label="$t('car.sell_money')">
-            <template slot-scope="scope">
-              {{ scope.row.sell_money }}
-            </template>
+          <el-table-column prop="sell_money" :label="$t('car.sell_money')">
           </el-table-column>
 
-          <el-table-column :label="$t('car.other_money')">
-            <template slot-scope="scope">
-              {{ scope.row.other_money }}
-            </template>
+          <el-table-column prop="other_money" :label="$t('car.other_money')">
           </el-table-column>
 
-          <el-table-column :label="$t('car.sell_status')">
-            <template slot-scope="scope">
-              {{ scope.row.sell_status.text }}
-            </template>
+          <el-table-column prop="inventory_total" :label="$t('car.inventory_total')">
           </el-table-column>
 
           <el-table-column :label="$t('common.handle')" fixed="right" width="480">

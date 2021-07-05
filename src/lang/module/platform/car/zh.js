@@ -19,6 +19,7 @@ export const car = {
   sell_money: '出售价格(万元)',
   other_money: '其他费用(万元)',
   browse_total: '用户浏览',
+  inventory_total: '库存数量',
   collection_total: '收藏数量',
   sell_status: '出售进度',
   audit_status: '审核状态',

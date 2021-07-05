@@ -16,7 +16,7 @@
       </div>
 
       <div class="admin_form_main color">
-        <el-form label-width="100px" ref="dataForm" :model="dataForm">
+        <el-form label-width="120px" ref="dataForm" :model="dataForm">
           <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span>{{ $t('car.user_info') }}</span>
