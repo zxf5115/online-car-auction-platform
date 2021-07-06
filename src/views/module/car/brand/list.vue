@@ -65,7 +65,7 @@
           <el-table-column prop="create_time" :label="$t('common.create_time')">
           </el-table-column>
 
-          <el-table-column :label="$t('common.handle')" fixed="right" width="380">
+          <el-table-column :label="$t('common.handle')" fixed="right" width="460">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:car:brand:view')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_car_brand_view', query: {id: scope.row.id}})">
                 {{ $t('common.view') }}
