@@ -63,7 +63,7 @@
                 {{ $t('common.update') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:merchant:form') && scope.row.certification&& 1 != scope.row.certification.audit_status.value" :type="1 == scope.row.certification.audit_status.value ? 'primary' : 'warning'" icon="el-icon-edit" @click="$router.push({name: 'module_merchant_form', query: {id: scope.row.id}})">
+              <el-button v-if="isAuth('module:merchant:form') && scope.row.certification && 0 == scope.row.certification.audit_status.value" :type="1 == scope.row.certification.audit_status.value ? 'primary' : 'warning'" icon="el-icon-edit" @click="$router.push({name: 'module_merchant_form', query: {id: scope.row.id}})">
                 {{ $t('common.audit') }}
               </el-button>
 

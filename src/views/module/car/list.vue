@@ -18,6 +18,10 @@
             </el-input>
           </div>
           <div>
+            <el-input v-model="dataForm.title" :placeholder="$t('common.please_input') + $t('car.title')" clearable>
+            </el-input>
+          </div>
+          <div>
             <el-select v-model="dataForm.source_id" :placeholder="$t('common.please_select') + $t('car.source.title')" clearable>
               <el-option :label="$t('common.all')" value=""></el-option>
               <el-option v-for="(v,k) in sourceList" :label="v.title" :key="k" :value="v.id"></el-option>
@@ -43,6 +47,9 @@
             <template slot-scope="scope" v-if="scope.row.member">
               {{ scope.row.member.nickname }}
             </template>
+          </el-table-column>
+
+          <el-table-column prop="title" :label="$t('car.title')">
           </el-table-column>
 
           <el-table-column :label="$t('car.source.title')">
@@ -78,7 +85,7 @@
                 {{ $t('common.view') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:car:form') && scope.row.audit_status['value'] != 1" type="primary" icon="el-icon-finished" @click="$router.push({name: 'module_car_form', query: {id : scope.row.id}})">
+              <el-button v-if="isAuth('module:car:form') && scope.row.audit_status['value'] == 0" type="warning" icon="el-icon-finished" @click="$router.push({name: 'module_car_form', query: {id : scope.row.id}})">
                 {{ $t('common.audit') }}
               </el-button>
 
@@ -131,6 +138,7 @@
         model: 'car',
         sourceList: [],
         dataForm: [
+          'title',
           'source_id',
           'member_nickname'
         ]

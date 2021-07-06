@@ -102,15 +102,15 @@
           ]
         },
         dataRule: {
-          type: [
-            { required: true, message: this.$t('car.shape.config.rules.type.require'), trigger: 'blur' },
-          ],
-          title: [
-            { required: true, message: this.$t('car.shape.config.rules.title.require'), trigger: 'blur' },
-          ],
-          params: [
-            { required: true, message: this.$t('car.shape.config.rules.params.require'), trigger: 'blur' },
-          ]
+          // type: [
+          //   { required: true, message: this.$t('car.shape.config.rules.type.require'), trigger: 'blur' },
+          // ],
+          // title: [
+          //   { required: true, message: this.$t('car.shape.config.rules.title.require'), trigger: 'blur' },
+          // ],
+          // params: [
+          //   { required: true, message: this.$t('car.shape.config.rules.params.require'), trigger: 'blur' },
+          // ]
         }
       };
     },

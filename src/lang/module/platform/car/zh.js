@@ -6,6 +6,7 @@ export const car = {
   car_info: '车源信息',
   browse_info: '浏览信息',
 
+  title: '汽车标题',
   car_shape_info: '车型信息',
   car_video: '车辆视频',
   car_image: '车辆图片',

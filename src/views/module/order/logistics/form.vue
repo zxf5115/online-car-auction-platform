@@ -51,6 +51,10 @@
             <el-input type="textarea" :placeholder="$t('order.logistics.content')" v-model="dataForm.content"></el-input>
           </el-form-item>
 
+          <el-form-item :label="$t('order.logistics.operator')" prop="operator">
+            <el-input :placeholder="$t('order.logistics.operator')" v-model="dataForm.operator"></el-input>
+          </el-form-item>
+
           <el-form-item>
             <el-button v-if="isAuth('module:car:shape:handle')" type="primary" @click="dataFormSubmit()">
               {{ $t('common.confirm') }}
@@ -91,6 +95,7 @@
           logistics_time: '',
           address: '',
           content: '',
+          operator: '',
         },
         dataRule:
         {
@@ -133,6 +138,7 @@
                 this.dataForm.logistics_time   = data.data.logistics_time
                 this.dataForm.address          = data.data.address
                 this.dataForm.content          = data.data.content
+                this.dataForm.operator         = data.data.operator
               }
             })
           }
@@ -154,6 +160,7 @@
                 'logistics_time': this.dataForm.logistics_time,
                 'address': this.dataForm.address,
                 'content': this.dataForm.content,
+                'operator': this.dataForm.operator,
               })
             }).then(({data}) => {
               if (data && data.status === 200) {

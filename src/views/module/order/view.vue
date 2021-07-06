@@ -273,6 +273,9 @@
 
                 <el-table-column prop="content" :label="$t('order.logistics.content')">
                 </el-table-column>
+
+                <el-table-column prop="operator" :label="$t('order.logistics.operator')">
+                </el-table-column>
               </el-table>
             </div>
           </el-card>

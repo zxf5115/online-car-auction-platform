@@ -33,6 +33,7 @@ export const order = {
     logistics_time: '变更时间',
     address: '到达地点',
     content: '详情',
+    operator: '经办人',
 
     rules: {
       type: {
