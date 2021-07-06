@@ -75,14 +75,14 @@
                 {{ $t('common.update') }}
               </el-button>
 
-              <!-- <el-button v-if="isAuth('module:car:brand:hot')" :type="scope.row.is_hot.value == 2 ? 'danger' : 'success'" :icon="scope.row.is_hot.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="hotHandle(scope.row.id, scope.row.is_hot.value)">
+              <el-button v-if="isAuth('module:car:brand:hot')" :type="scope.row.is_hot.value == 2 ? 'danger' : 'success'" :icon="scope.row.is_hot.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="hotHandle(scope.row.id, scope.row.is_hot.value)">
                 <span v-if="scope.row.is_hot.value == 1">
                   {{ $t('car.brand.yes') }}
                 </span>
                 <span v-else>
                   {{ $t('car.brand.no') }}
                 </span>
-              </el-button> -->
+              </el-button>
 
               <el-button v-if="isAuth('module:car:brand:enable')" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
                 <span v-if="scope.row.status.value == 1">

@@ -16,7 +16,7 @@
       </div>
 
       <div class="admin_form_main color">
-        <el-form label-width="100px" ref="dataForm" :model="dataForm" :rules="dataRule">
+        <el-form label-width="140px" ref="dataForm" :model="dataForm" :rules="dataRule">
           <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span>{{ $t('car.user_info') }}</span>
@@ -209,9 +209,9 @@
                 </b>
               </el-form-item>
 
-              <el-form-item prop="sell_status" :label="$t('car.sell_status')">
+              <!-- <el-form-item prop="sell_status" :label="$t('car.sell_status')">
                 {{ dataForm.sell_status }}
-              </el-form-item>
+              </el-form-item> -->
 
               <el-form-item :label="$t('car.create_time')">
                 {{ dataForm.create_time }}
