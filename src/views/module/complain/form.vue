@@ -18,6 +18,12 @@
       <div class="admin_form_main">
         <el-form label-width="120px" ref="dataForm" :model="dataForm" :rules="dataRule">
 
+          <el-form-item :label="$t('member.nickname')">
+            <span v-if="dataForm.member">
+              {{ dataForm.member.nickname }}
+            </span>
+          </el-form-item>
+
           <el-form-item :label="$t('complain.category.title')">
             <span v-if="dataForm.category">
               {{ dataForm.category.title }}
