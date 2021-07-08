@@ -3,7 +3,7 @@
     <div class="admin_main_block">
       <div class="admin_main_block_top">
         <div class="admin_main_block_left">
-          <div>{{ $t('advertising.from') }}</div>
+          <div>{{ $t('complain.view') }}</div>
         </div>
 
         <div class="admin_main_block_right">
@@ -16,43 +16,35 @@
       </div>
 
       <div class="admin_form_main">
-        <el-form label-width="100px" ref="dataForm" :model="dataForm" :rules="dataRule">
+        <el-form label-width="120px" ref="dataForm" :model="dataForm" :rules="dataRule">
 
-          <el-form-item :label="$t('advertising.position.title')" prop="position_id">
-            <el-select v-model="dataForm.position_id" :placeholder="$t('common.please_select')+$t('advertising.position.title')">
-              <el-option v-for="(v,k) in position" :label="v.title" :key="k" :value="v.id"></el-option>
-            </el-select>
+          <el-form-item :label="$t('complain.category.title')">
+            <span v-if="dataForm.category">
+              {{ dataForm.category.title }}
+            </span>
           </el-form-item>
 
-          <el-form-item :label="$t('advertising.title')" prop="title">
-            <el-input :placeholder="$t('common.please_input')+$t('advertising.title')" v-model="dataForm.title"></el-input>
+          <el-form-item :label="$t('complain.content')">
+            <div v-html="dataForm.content"></div>
           </el-form-item>
 
-          <el-form-item :label="$t('advertising.picture')" prop="picture">
-            <el-upload class="avatar-uploader" :action="this.$http.adornUrl('/file/picture')" :show-file-list="false" :headers="upload_headers" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-              <img v-if="dataForm.picture" :src="dataForm.picture" class="avatar-upload">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.url')" prop="url">
-            <el-input :placeholder="$t('common.please_input')+$t('advertising.url')" v-model="dataForm.url"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('advertising.link')" prop="link">
-            <el-input :placeholder="$t('common.please_input')+$t('advertising.link')" v-model="dataForm.link"></el-input>
-          </el-form-item>
-
-          <el-form-item :label="$t('common.sort')" prop="sort">
-            <el-input-number :placeholder="$t('common.please_input')+$t('common.sort')" v-model="dataForm.sort"></el-input-number>
+          <el-form-item :label="$t('complain.picture')">
+            <span width="500" v-if="dataForm.resource">
+              <el-row :gutter="20" type="flex" class="row-bg">
+                <el-col :span="3" v-for="(item, index) in dataForm.resource" :key="index">
+                  <el-image style="width: 100px;height: auto;" :src="item.picture" :preview-src-list="[item.picture]">
+                    <div slot="error" class="image-slot">
+                      <i class="el-icon-picture-outline"></i>
+                    </div>
+                  </el-image>
+                </el-col>
+              </el-row>
+            </span>
           </el-form-item>
 
           <el-form-item>
-            <el-button v-if="isAuth('module:advertising:handle')" type="primary" @click="dataFormSubmit()">
-              {{ $t('common.confirm') }}
-            </el-button>
-            <el-button @click="resetForm()">
-              {{ $t('common.reset') }}
+            <el-button v-if="isAuth('module:complain:read') && 0 == dataForm.read_status.value" type="primary" @click="readHandle(dataForm.id)">
+              {{ $t('complain.read') }}
             </el-button>
           </el-form-item>
         </el-form>
@@ -67,28 +59,15 @@
     extends: common,
     data() {
       return {
-        model: 'advertising',
+        model: 'complain',
         position: [],
         upload_headers:{},
         dataForm:
         {
           id: 0,
-          position_id: '',
-          title: '',
-          picture: '',
-          url: '',
-          link: '',
-          sort: 0,
+          read_status: 0,
         },
-        dataRule:
-        {
-          position_id: [
-            { required: true, message: this.$t('advertising.rules.position_id.require'), trigger: 'blur' },
-          ],
-          title: [
-            { required: true, message: this.$t('advertising.rules.title.require'), trigger: 'blur' },
-          ]
-        }
+        dataRule: {}
       };
     },
     methods: {
@@ -102,89 +81,42 @@
           this.$refs['dataForm'].resetFields()
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/advertising/view/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/complain/view/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data && data.status === 200) {
-                this.dataForm.position_id      = data.data.position_id
-                this.dataForm.title            = data.data.title
-                this.dataForm.picture          = data.data.picture
-                this.dataForm.url              = data.data.url
-                this.dataForm.link             = data.data.link
-                this.dataForm.sort             = data.data.sort
+                this.dataForm = data.data
               }
             })
           }
         })
       },
-      // 表单提交
-      dataFormSubmit () {console.log(1);
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            this.$http({
-              url: this.$http.adornUrl(`/advertising/handle`),
-              method: 'post',
-              data: this.$http.adornData({
-                'id': this.dataForm.id || undefined,
-                'position_id': this.dataForm.position_id,
-                'title': this.dataForm.title,
-                'picture': this.dataForm.picture,
-                'url': this.dataForm.url,
-                'link': this.dataForm.link,
-                'sort': this.dataForm.sort,
-              })
-            }).then(({data}) => {
-              if (data && data.status === 200) {
-                this.$message.success(this.$t('common.handle_success'));
-                this.$router.go(-1);
-              } else {
-                this.$message.error(this.$t(data.message))
-              }
-            })
-          }
-        })
-      },
-      resetForm:function()
-      {
-        this.$refs['dataForm'].resetFields();
-      },
+      readHandle (id) {
 
-      loadPositionList () {
-        this.$http({
-          url: this.$http.adornUrl('/advertising/position/select'),
-          method: 'get'
-        }).then(({data}) => {
-          if (data && data.status === 200) {
-            this.position = data.data
-          } else {
-            this.$message.error(this.$t(data.message))
-          }
-        })
-      },
-      handleAvatarSuccess(res, file) {
-        this.dataForm.picture = res.data;
-      },
-      beforeAvatarUpload(file) {
-        const isLt2M = file.size / 1024 / 1024 < 10;
+        let message = '您已经阅读当前投诉信息？'
 
-        if (!isLt2M) {
-          this.$message.error(this.$t('common.file.rules.size'))
-        }
-
-        return isLt2M;
-      },
+        this.$confirm(message, this.$t('common.prompt'), {
+          confirmButtonText: this.$t('common.confirm'),
+          cancelButtonText: this.$t('common.cancel'),
+          type: 'warning'
+        }).then(() => {
+          this.$http({
+            url: this.$http.adornUrl('/'+this.model+'/read'),
+            method: 'post',
+            data: {id: id}
+          }).then(({data}) => {
+            if (data && data.status === 200) {
+              this.$router.go(-1)
+            } else {
+              this.$message.error(this.$t(data.message))
+            }
+          })
+        }).catch(() => {})
+      }
     },
     created() {
       this.init();
-
-      this.dataForm.position_id = this.$route.query.position_id;
-
-      // 要保证取到
-      this.upload_headers.Authorization = 'Bearer ' + localStorage.getItem('token');
-    },
-    mounted () {
-      this.loadPositionList();
-    },
+    }
   };
 </script>

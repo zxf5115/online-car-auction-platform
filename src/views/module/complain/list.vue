@@ -62,8 +62,8 @@
 
           <el-table-column :label="$t('common.handle')" fixed="right" width="240">
             <template slot-scope="scope">
-              <el-button v-if="isAuth('module:complain:read') && scope.row.read_status.value == 0" type="info" icon="el-icon-view" @click="readHandle(scope.row.id)">
-                {{ $t('complain.read') }}
+              <el-button v-if="isAuth('module:complain:form')" type="info" icon="el-icon-view" @click="$router.push({name: 'module_complain_form', query: {id: scope.row.id}})">
+                {{ $t('common.view') }}
               </el-button>
 
               <el-button v-if="isAuth('module:complain:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
@@ -113,35 +113,6 @@
           }
         })
       },
-      readHandle (id) {
-
-        let message = '您已经阅读当前投诉信息？'
-
-        this.$confirm(message, this.$t('common.prompt'), {
-          confirmButtonText: this.$t('common.confirm'),
-          cancelButtonText: this.$t('common.cancel'),
-          type: 'warning'
-        }).then(() => {
-          this.$http({
-            url: this.$http.adornUrl('/'+this.model+'/read'),
-            method: 'post',
-            data: {id: id}
-          }).then(({data}) => {
-            if (data && data.status === 200) {
-              this.$message({
-                message: this.$t('common.handle_success'),
-                type: 'success',
-                duration: 1500,
-                onClose: () => {
-                  this.getDataList()
-                }
-              })
-            } else {
-              this.$message.error(this.$t(data.message))
-            }
-          })
-        }).catch(() => {})
-      }
     },
     mounted () {
       this.loadCategoryList();

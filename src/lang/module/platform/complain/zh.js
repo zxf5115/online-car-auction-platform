@@ -5,6 +5,7 @@ export const complain = {
 
   type: '投诉类型',
   content: '投诉内容',
+  picture: '投诉图片',
   read_status: '阅读状态',
 
 
