@@ -35,9 +35,9 @@
           </el-form-item>
 
           <el-form-item :label="$t('complain.picture')">
-            <span width="500" v-if="dataForm.resource">
+            <span style="width:800px; display: block;" v-if="dataForm.resource">
               <el-row :gutter="20" type="flex" class="row-bg">
-                <el-col :span="3" v-for="(item, index) in dataForm.resource" :key="index">
+                <el-col :span="6" v-for="(item, index) in dataForm.resource" :key="index">
                   <el-image style="width: 100px;height: auto;" :src="item.picture" :preview-src-list="[item.picture]">
                     <div slot="error" class="image-slot">
                       <i class="el-icon-picture-outline"></i>
