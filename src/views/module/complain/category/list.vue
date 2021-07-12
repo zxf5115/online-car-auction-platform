@@ -52,10 +52,10 @@
 
               <el-button v-if="isAuth('module:complain:category:status')" :type="scope.row.status.value == 2 ? 'danger' : 'success'" :icon="scope.row.status.value == 1 ? 'el-icon-check' : 'el-icon-close'" @click="enableHandle(scope.row.id, scope.row.status.value)">
                 <span v-if="scope.row.status.value == 1">
-                  {{ $t('courseware.enable') }}
+                  {{ $t('common.enable') }}
                 </span>
                 <span v-else>
-                  {{ $t('courseware.disable') }}
+                  {{ $t('common.disable') }}
                 </span>
               </el-button>
 
