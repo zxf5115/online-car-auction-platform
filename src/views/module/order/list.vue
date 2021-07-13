@@ -134,7 +134,7 @@
                 {{ $t('order.take_finish') }}
               </el-button>
 
-              <el-button v-if="isAuth('module:order:cancel')" type="danger" icon="el-icon-refresh-right" @click="statusHandle(scope.row.id, -1)">
+              <el-button v-if="isAuth('module:advertising:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
                 {{ $t('common.delete') }}
               </el-button>
             </template>
