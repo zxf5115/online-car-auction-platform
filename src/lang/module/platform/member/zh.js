@@ -10,8 +10,11 @@ export const member = {
   course_production: '课程作品',
   upload_finish: '已上传',
   upload_wait: '未上传',
+  inviter: '邀请人',
 
-  user_info: '个人信息',
+  user_info: '基本信息',
+  bank_info: '银行卡信息',
+  personal_info: '个人信息',
 
   member_no: '消费者ID',
   avatar: '消费者头像',
@@ -89,14 +92,13 @@ export const member = {
     area: '地区',
     address: '详细地址',
 
-
-
-    // study_type: '订单编号',
-    // study_type: '购买课程',
-    // start_time: '课程周期',
-    // end_time: '开课时间',
-    // course_study_time: '购课金额',
-    // course_study_time: '购买时间',
+    account: '银行卡户名',
+    bank_card_no: '银行卡号',
+    id_card_no: '持卡人身份证号',
+    mobile: '银行预留手机号',
+    realname: '姓名',
+    certificate_no: '证件号',
+    phone: '手机号',
 
     rules: {
       member_id: {

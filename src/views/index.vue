@@ -11,7 +11,7 @@
       </div>
       <div class="text item text-center">
         <el-row :gutter="20">
-          <el-col :span="8" class="default_block_col">
+          <el-col :span="6" class="default_block_col">
             <el-card shadow="never">
               <el-row>
                 <el-col :span="12">
@@ -30,7 +30,7 @@
               </el-row>
             </el-card>
           </el-col>
-          <el-col :span="8" class="default_block_col">
+          <el-col :span="6" class="default_block_col">
             <el-card shadow="never">
               <el-row>
                 <el-col :span="12">
@@ -49,7 +49,7 @@
               </el-row>
             </el-card>
           </el-col>
-          <el-col :span="8" class="default_block_col">
+          <el-col :span="6" class="default_block_col">
             <el-card shadow="never">
               <el-row>
                 <el-col :span="12">
@@ -61,6 +61,25 @@
                     <span class="blue">
                       <el-button type="text" @click="$router.push({name: 'module_merchant_list'})">
                         {{ statistical.merchant_total }}
+                      </el-button>
+                    </span>
+                  </div>
+                </el-col>
+              </el-row>
+            </el-card>
+          </el-col>
+          <el-col :span="6" class="default_block_col">
+            <el-card shadow="never">
+              <el-row>
+                <el-col :span="12">
+                  <i class="icon el-icon-mouse"></i>
+                </el-col>
+                <el-col :span="12">
+                  <div class="default_day_sale">
+                    自行注册用户
+                    <span class="blue">
+                      <el-button type="text" @click="$router.push({name: 'module_member_list'})">
+                        {{ statistical.un_inviter_total }}
                       </el-button>
                     </span>
                   </div>
@@ -337,6 +356,7 @@
           today_member_total: 0,
           member_total: 0,
           merchant_total: 0,
+          un_inviter_total: 0,
 
           car_out_total: 0,
           car_in_total: 0,
@@ -365,6 +385,7 @@
             this.statistical.today_member_total = data.data.today_member_total
             this.statistical.member_total       = data.data.member_total
             this.statistical.merchant_total     = data.data.merchant_total
+            this.statistical.un_inviter_total   = data.data.un_inviter_total
           }
         })
       },

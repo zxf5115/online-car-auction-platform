@@ -16,7 +16,7 @@
       </div>
 
       <div class="admin_form_main">
-        <el-form :model="dataForm" label-position="right" label-width="100px">
+        <el-form :model="dataForm" label-position="right" label-width="140px">
           <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span>{{ $t('member.user_info') }}</span>
@@ -79,6 +79,60 @@
               <el-form-item :label="$t('member.address.address')">
                 <span v-if="dataForm.address">
                   {{ dataForm.address.address  || '' }}
+                </span>
+              </el-form-item>
+            </div>
+          </el-card>
+          <el-card class="box-card mt10" shadow="never">
+            <div slot="header" class="clearfix">
+              <span>{{ $t('member.personal_info') }}</span>
+            </div>
+            <div class="text item">
+              <el-form-item :label="$t('member.archive.realname')">
+                <span v-if="dataForm.archive">
+                  {{ dataForm.archive.realname  }}
+                </span>
+              </el-form-item>
+
+              <el-form-item :label="$t('member.archive.certificate_no')">
+                <span v-if="dataForm.archive">
+                  {{ dataForm.archive.certificate_no }}
+                </span>
+              </el-form-item>
+
+              <el-form-item :label="$t('member.archive.phone')">
+                <span v-if="dataForm.archive">
+                  {{ dataForm.archive.phone }}
+                </span>
+              </el-form-item>
+            </div>
+          </el-card>
+          <el-card class="box-card mt10" shadow="never">
+            <div slot="header" class="clearfix">
+              <span>{{ $t('member.bank_info') }}</span>
+            </div>
+            <div class="text item">
+              <el-form-item :label="$t('member.archive.account')">
+                <span v-if="dataForm.archive">
+                  {{ dataForm.archive.account  }}
+                </span>
+              </el-form-item>
+
+              <el-form-item :label="$t('member.archive.bank_card_no')">
+                <span v-if="dataForm.archive">
+                  {{ dataForm.archive.bank_card_no }}
+                </span>
+              </el-form-item>
+
+              <el-form-item :label="$t('member.archive.id_card_no')">
+                <span v-if="dataForm.archive">
+                  {{ dataForm.archive.id_card_no }}
+                </span>
+              </el-form-item>
+
+              <el-form-item :label="$t('member.archive.mobile')">
+                <span v-if="dataForm.archive">
+                  {{ dataForm.archive.mobile }}
                 </span>
               </el-form-item>
             </div>

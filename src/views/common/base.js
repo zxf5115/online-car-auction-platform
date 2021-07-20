@@ -58,6 +58,7 @@ export default {
           'category': this.dataForm.category,
           'pid': this.dataForm.pid,
           'role_id': this.dataForm.role_id,
+          'inviter_id': this.dataForm.inviter_id,
 
           'parent_id': this.dataForm.parent_id,
           'category_id': this.dataForm.category_id,
