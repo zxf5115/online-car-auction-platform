@@ -137,7 +137,7 @@
               </el-form-item>
             </div>
           </el-card>
-          <el-card class="box-card mt10">
+          <!-- <el-card class="box-card mt10">
             <div slot="header" class="clearfix">
               <span>{{ $t('member.wallet') }}</span>
             </div>
@@ -154,7 +154,7 @@
                 </span>
               </el-form-item>
             </div>
-          </el-card>
+          </el-card> -->
         </el-form>
       </div>
     </div>

@@ -87,7 +87,7 @@
             </div>
           </el-card>
 
-          <el-card class="box-card mt10">
+          <!-- <el-card class="box-card mt10">
             <div slot="header" class="clearfix">
               <span>{{ $t('member.wallet') }}</span>
             </div>
@@ -100,7 +100,7 @@
                 {{ dataForm.credit_money }}
               </el-form-item>
             </div>
-          </el-card>
+          </el-card> -->
 
           <el-form-item class="mt10 text-center">
             <el-button v-if="isAuth('module:member:handle')" type="primary" @click="dataFormSubmit()">
