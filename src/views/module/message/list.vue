@@ -48,17 +48,7 @@
           <el-table-column prop="title" :label="$t('message.title')">
           </el-table-column>
 
-          <el-table-column header-align="center" align="center" :label="$t('message.receiver')">
-            <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
-                <span v-for="(value, index) in scope.row.member" :label="index" :key="index">
-                  <b v-if="value">{{ value.nickname }} &nbsp;&nbsp;</b>
-                </span>
-                <div slot="reference" class="name-wrapper">
-                  <el-tag size="medium">{{ $t('common.view') }}</el-tag>
-                </div>
-              </el-popover>
-            </template>
+          <el-table-column prop="content" :label="$t('message.content')">
           </el-table-column>
 
           <el-table-column prop="create_time" header-align="center" align="center" :label="$t('common.create_time')">
