@@ -85,7 +85,6 @@
           {'id': 1, 'title': '单选'},
           {'id': 2, 'title': '多选'},
           {'id': 3, 'title': '时间'},
-          {'id': 4, 'title': '金钱'},
           {'id': 5, 'title': '文本框'},
         ],
         dataForm:
