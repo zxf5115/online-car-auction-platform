@@ -80,14 +80,14 @@
               <el-input v-model="dataForm.certificate_no" :placeholder="$t('common.please_input')+$t('merchant.certification.company_certificate_no')"></el-input>
             </el-form-item>
 
-            <el-form-item class="mavon" :label="$t('merchant.certification.picture')" prop="picture">
+            <!-- <el-form-item class="mavon" :label="$t('merchant.certification.picture')" prop="picture">
               <el-upload :action="this.$http.adornUrl('/file/picture')" list-type="picture-card" :headers="upload_headers" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"  :on-success="handlePictureSuccess" :before-upload="beforePictureUpload" :file-list="pictureList" :limit="2">
                 <i class="el-icon-plus"></i>
               </el-upload>
               <el-dialog :visible.sync="dialogVisible">
                 <img width="100%" :src="dialogImageUrl" alt="">
               </el-dialog>
-            </el-form-item>
+            </el-form-item> -->
           </div>
 
           <div v-if="audit_status != 1">
