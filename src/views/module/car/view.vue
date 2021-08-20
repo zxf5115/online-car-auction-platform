@@ -86,7 +86,7 @@
                   </span>
                 </el-form-item>
 
-                <el-form-item :label="$t('merchant.certification.picture')">
+                <!-- <el-form-item :label="$t('merchant.certification.picture')">
                   <span v-if="dataForm.user">
 
                     <el-image style="width: 100px;" :src="dataForm.user.cerificate_front_picture" :preview-src-list="cerificate_front_picture">
@@ -101,7 +101,7 @@
                       </div>
                     </el-image>
                   </span>
-                </el-form-item>
+                </el-form-item> -->
               </div>
             </div>
           </el-card>
