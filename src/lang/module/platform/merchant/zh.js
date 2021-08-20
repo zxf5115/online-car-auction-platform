@@ -61,7 +61,7 @@ export const merchant = {
     certificate_type: '证件类型',
     people_certificate_no: '身份证号',
     card_certificate_no: '持卡人身份证号',
-    company_certificate_no: '注册号',
+    company_certificate_no: '证件号码',
     bank_card_no: '银行卡号',
     picture: '证件照片',
 
