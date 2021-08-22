@@ -65,10 +65,6 @@
                 <el-input v-model="dataForm.mobile" :placeholder="$t('common.please_input') + $t('member.address.mobile')"></el-input>
               </el-form-item>
 
-              <el-form-item :label="$t('member.address.postcode')" prop="mobile">
-                <el-input v-model="dataForm.postcode" :placeholder="$t('common.please_input') + $t('member.address.postcode')"></el-input>
-              </el-form-item>
-
               <el-form-item :label="$t('common.province')" prop="province_id">
                 <el-input v-model="dataForm.province_id" :placeholder="$t('common.please_input') + $t('common.province')"></el-input>
               </el-form-item>

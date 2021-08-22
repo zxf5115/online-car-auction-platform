@@ -64,12 +64,6 @@
                 </span>
               </el-form-item>
 
-              <el-form-item :label="$t('member.address.postcode')">
-                <span v-if="dataForm.address">
-                  {{ dataForm.address.postcode }}
-                </span>
-              </el-form-item>
-
               <el-form-item :label="$t('member.archive.area')">
                 <span v-if="dataForm.address">
                   {{ dataForm.address.province_id || '' }} {{ dataForm.address.city_id || '' }} {{ dataForm.address.region_id || '' }}

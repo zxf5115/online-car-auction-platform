@@ -2,16 +2,6 @@
   <div class="qingwu">
     <div class="admin_main_block">
       <div class="admin_main_block_top">
-        <div class="admin_main_block_right">
-          <div>
-            <el-button v-if="isAuth('log:action:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle()">
-              {{ $t('common.batch_delete') }}
-            </el-button>
-          </div>
-        </div>
-      </div>
-
-      <div class="admin_main_block_top">
         <div class="admin_main_block_left">
           <div>
             <el-input v-model="dataForm.username" :placeholder="$t('common.please_input') + $t('user.nickname')" clearable>
@@ -47,14 +37,6 @@
           </el-table-column>
 
           <el-table-column prop="create_time" :label="$t('log.action.create_time')" width="150">
-          </el-table-column>
-
-          <el-table-column :label="$t('common.handle')" fixed="right" width="120">
-            <template slot-scope="scope">
-              <el-button v-if="isAuth('user:delete')" type="danger" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
-                {{ $t('common.delete') }}
-              </el-button>
-            </template>
           </el-table-column>
         </el-table>
         <div class="admin_table_main_pagination">
