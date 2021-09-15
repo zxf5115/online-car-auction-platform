@@ -48,9 +48,6 @@
             </template>
           </el-table-column> -->
 
-          <el-table-column prop="sort" :label="$t('common.sort')">
-          </el-table-column>
-
           <el-table-column :label="$t('common.handle')" fixed="right" width="280">
             <template slot-scope="scope">
               <el-button v-if="isAuth('module:advertising:form')" type="primary" icon="el-icon-edit" @click="$router.push({name: 'module_advertising_form', query: {id: scope.row.id}})">

@@ -41,10 +41,6 @@
             </el-dialog>
           </el-form-item>
 
-          <el-form-item :label="$t('common.sort')" prop="sort">
-            <el-input-number :placeholder="$t('common.please_input')+$t('common.sort')" v-model="dataForm.sort"></el-input-number>
-          </el-form-item>
-
           <el-form-item>
             <el-button v-if="isAuth('module:advertising:handle')" type="primary" @click="dataFormSubmit()">
               {{ $t('common.confirm') }}
