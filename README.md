@@ -8,19 +8,16 @@
 
 
 ## Picture display
-![登录页](tmp/1.png)
-![首页](tmp/2.png)
-![课程列表页](tmp/3.png)
-![课程编辑页](tmp/4.png)
-![课件列表页](tmp/5.png)
-![商品列表页](tmp/6.png)
-![商品编辑页](tmp/7.png)
-![课程订单列表页](tmp/8.png)
-![商品订单列表页](tmp/9.png)
-![财务报表页](tmp/10.png)
-![提现列表页](tmp/11.png)
-![学员列表页](tmp/12.png)
-![老师列表页](tmp/13.png)
+![登录页](public/preview/1.png)
+![首页](public/preview/2.png)
+![订单列表页](public/preview/3.png)
+![广告列表页](public/preview/4.png)
+![消费者列表页](public/preview/5.png)
+![车商列表页](public/preview/6.png)
+![汽车列表页](public/preview/7.png)
+![车型列表页](public/preview/8.png)
+![品牌列表页](public/preview/9.png)
+![门店列表页](public/preview/10.png)
 
 
 ### Find for remote work or collaboration
